@@ -11,6 +11,7 @@ title: Ideas
 ## React Native
 * Sentry configuration for React-Native project
 * Different environment for your app
+* Error handling & centralizing API calls to middleware
 
 
 ## Fastlane
