@@ -25,4 +25,9 @@ title: Ideas
 
 ## VIM
 * [SplitJoin](https://github.com/AndrewRadev/splitjoin.vim)
+* [Easy Motion](https://github.com/easymotion/vim-easymotion)
+
+## Tiling window manager
+* i3 for Ubuntu 
+* KWM for MacOS
 
