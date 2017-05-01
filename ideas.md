@@ -1,5 +1,5 @@
 ---
-layout: ideas
+layout: page
 title: Ideas
 ---
 
