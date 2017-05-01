@@ -7,6 +7,7 @@ title: Ideas
 * Currying
 * [reactjs/reselect](https://github.com/reactjs/reselect)
 * Vue component slots compared with React/Angular/Ember
+* Making reusable components with Slots / Transclusion
 
 ## React Native
 * Sentry configuration for React-Native project
