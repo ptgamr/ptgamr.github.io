@@ -21,6 +21,7 @@ title: Ideas
 
 ## DevOps
 * Git push to deploy (like heroku)
+* Setup a Replica set for MongoDB
 
 ## VIM
 * [SplitJoin](https://github.com/AndrewRadev/splitjoin.vim)
