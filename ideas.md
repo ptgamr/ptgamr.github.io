@@ -24,6 +24,10 @@ title: Ideas
 ## DevOps
 * Git push to deploy (like heroku)
 * Setup a Replica set for MongoDB
+* GitLab CI 
+  * Can run GitLab CI on our own server
+  * Push both repo to bitbucket & gitlab, so we don't need to care for backup
+  * http://blog.deadlypenguin.com/blog/2016/05/02/git-push-multiple-remotes/
 
 ## VIM
 * [SplitJoin](https://github.com/AndrewRadev/splitjoin.vim)
