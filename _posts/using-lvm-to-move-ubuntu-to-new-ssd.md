@@ -3,7 +3,7 @@
 
 # Moving your home folder to new SSD
 
-```
+```bash
 # create new logical volume on the remaining space
 sudo lvcreate -l 100%FREE -n home ubuntu-vg
 
