@@ -1,4 +1,4 @@
-# Moving old LVM Partition to the new SSD
+### Moving old LVM Partition to the new SSD
 
 After you have installed the SSD, in my case, it is located at `/dev/nvme0n1`, and let say your current Ubuntu is installed at `/dev/sdOLD`
 
@@ -33,7 +33,7 @@ sudo update-grub
 sudo grub-install /dev/nvme0n1
 ```
 
-# Moving your home folder to new SSD
+### Moving your home folder to new SSD
 
 ```bash
 # create new logical volume on the remaining space
@@ -74,7 +74,7 @@ sudo lvresize -L 20G --resizefs /dev/ubuntu-vg/root
 sudo lvresize -l +100%FREE --resizefs /dev/ubuntu-vg/home
 ```
 
-# References
+### References
 
 - Good introduction about LVM: https://www.digitalocean.com/community/tutorials/how-to-use-lvm-to-manage-storage-devices-on-ubuntu-16-04
 
