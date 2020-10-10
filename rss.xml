@@ -1,5 +1,233 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>https://gatsby-starter-blog-demo.netlify.app</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Oct 2020 09:18:24 GMT</lastBuildDate><item><title><![CDATA[New Beginnings]]></title><description><![CDATA[Far far away, behind the word mountains, far from the countries Vokalia and
-Consonantia, there live the blind texts. Separated they live in…]]></description><link>https://gatsby-starter-blog-demo.netlify.app/new-beginnings/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.app/new-beginnings/</guid><pubDate>Thu, 28 May 2015 22:40:32 GMT</pubDate><content:encoded>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Anh Trinh's blog]]></title><description><![CDATA[My development journal]]></description><link>https://ptgamr.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Oct 2020 09:38:52 GMT</lastBuildDate><item><title><![CDATA[#TIL: Double dash "--" option in bash]]></title><description><![CDATA[It signals the end of command options, after which only positional parameters are accepted. Example use: lets say you want to grep a file…]]></description><link>https://ptgamr.github.io/2020-04-06-til-bash-double-dash/</link><guid isPermaLink="false">https://ptgamr.github.io/2020-04-06-til-bash-double-dash/</guid><pubDate>Mon, 06 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;It signals the end of command options, after which only positional parameters are accepted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example use&lt;/strong&gt;: lets say you want to grep a file for the string &lt;code class=&quot;language-text&quot;&gt;-v&lt;/code&gt; - normally &lt;code class=&quot;language-text&quot;&gt;-v&lt;/code&gt; will be considered
+the option to reverse the matching meaning (only show lines that do not match), but with &lt;code class=&quot;language-text&quot;&gt;--&lt;/code&gt; you can grep
+for string -v like this&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;grep -- -v file&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Using LVM to move Ubuntu to new SSD]]></title><description><![CDATA[Moving old LVM Partition to the new SSD After you have installed the SSD, in my case, it is located at , and let say your current Ubuntu is…]]></description><link>https://ptgamr.github.io/2018-04-08-using-lvm-to-move-ubuntu-to-new-ssd/</link><guid isPermaLink="false">https://ptgamr.github.io/2018-04-08-using-lvm-to-move-ubuntu-to-new-ssd/</guid><pubDate>Sun, 08 Apr 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;Moving old LVM Partition to the new SSD&lt;/h3&gt;
+&lt;p&gt;After you have installed the SSD, in my case, it is located at &lt;code class=&quot;language-text&quot;&gt;/dev/nvme0n1&lt;/code&gt;, and let say your current Ubuntu is installed at &lt;code class=&quot;language-text&quot;&gt;/dev/sdOLD&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Make it a LVM Physical volume&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; pvcreate /dev/nvme0n1
+
+&lt;span class=&quot;token comment&quot;&gt;# Verify it&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lvmdiskscan
+
+&lt;span class=&quot;token comment&quot;&gt;# My result:&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#  /dev/nvme0n1          [     232.89 GiB] LVM physical volume#&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#  /dev/ubuntu-vg/root   [      123.31 GiB]&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#  .....&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#  /dev/sdOLD   [      123.31 GiB] LVM physical volume#&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Add the new LVM volume to existing ubuntu-vg LVM group&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; vgextend ubuntu-vg /dev/nvme0n1
+
+&lt;span class=&quot;token comment&quot;&gt;# Moving the old partion to the new&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; pvmove /dev/sdOLD
+
+&lt;span class=&quot;token comment&quot;&gt;# Removing the old volume from ubunut-vg group&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; vgreduce ubuntu-vg /dev/sdOLD
+
+&lt;span class=&quot;token comment&quot;&gt;# Remove the physical logical volume (if you wish)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; pvremove /dev/sdOLD
+
+&lt;span class=&quot;token comment&quot;&gt;# Updating grub&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;update-grub&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; grub-install /dev/nvme0n1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Moving your home folder to new SSD&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# create new logical volume on the remaining space&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lvcreate -l &lt;span class=&quot;token number&quot;&gt;100&lt;/span&gt;%FREE -n home ubuntu-vg
+
+&lt;span class=&quot;token comment&quot;&gt;# make file system&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;mkfs&lt;/span&gt; -t ext4 /dev/ubuntu-vg/home
+
+&lt;span class=&quot;token comment&quot;&gt;# mount&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;mount&lt;/span&gt; /dev/ubuntu-vg/home /mnt/home
+
+&lt;span class=&quot;token comment&quot;&gt;# RSync the home folder&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;rsync&lt;/span&gt; -aXS --info&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;progress2 /home/. /mnt/home/.
+
+&lt;span class=&quot;token comment&quot;&gt;# Backup the current /home&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; /
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;mv&lt;/span&gt; /home /home_backup
+
+&lt;span class=&quot;token comment&quot;&gt;# Mount /home to the new location&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;mkdir&lt;/span&gt; /home
+
+&lt;span class=&quot;token comment&quot;&gt;# Change fstab&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;vim&lt;/span&gt; /etc/fstab
+
+&lt;span class=&quot;token comment&quot;&gt;# Add following line:&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;UUID&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;your_partition_uui&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;   /home   ext4    nodev,nosuid  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# ( To get the UUID you can use: $ sudo blkid )&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Logout and login again to check if it works&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# If everything is find, delete the backup folder&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; -rf /home_backup
+
+&lt;span class=&quot;token comment&quot;&gt;# You might shrink your root partition&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lvresize -L 20G --resizefs /dev/ubuntu-vg/root
+
+&lt;span class=&quot;token comment&quot;&gt;# To extend /home to take up all the free space&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lvresize -l +100%FREE --resizefs /dev/ubuntu-vg/home&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Good introduction about LVM: &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-use-lvm-to-manage-storage-devices-on-ubuntu-16-04&quot;&gt;https://www.digitalocean.com/community/tutorials/how-to-use-lvm-to-manage-storage-devices-on-ubuntu-16-04&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The original idea is taken from the answer in this thread: &lt;a href=&quot;https://askubuntu.com/questions/161279/how-do-i-move-my-lvm-250-gb-root-partition-to-a-new-120gb-hard-disk&quot;&gt;https://askubuntu.com/questions/161279/how-do-i-move-my-lvm-250-gb-root-partition-to-a-new-120gb-hard-disk&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Download whole Coursera notebook]]></title><description><![CDATA[Context: I am already using coursera-dl to download the videos and it works great, but I missed an analogous tool for the assignments. GREAT…]]></description><link>https://ptgamr.github.io/2018-04-01-download-coursera-whole-notebook/</link><guid isPermaLink="false">https://ptgamr.github.io/2018-04-01-download-coursera-whole-notebook/</guid><pubDate>Sun, 01 Apr 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: I am already using coursera-dl to download the videos and it works great, but I missed an analogous tool for the assignments.&lt;/p&gt;
+&lt;p&gt;GREAT NEWS!&lt;/p&gt;
+&lt;p&gt;I have just found a way to download all the assignment files from the coursera-notebook hub.&lt;/p&gt;
+&lt;p&gt;This saved me hours of painful single file downloading:&lt;/p&gt;
+&lt;p&gt;(adapted from here )&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Go to the home of the coursera-notebook hub
+
+Create a new python notebook
+
+Execute !tar cvfz allfiles.tar.gz * in a cell
+
+Download the archive !&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;p&gt;If the resulting archive is too big and you can’t download it&lt;/p&gt;
+&lt;p&gt;Open the python notebook where you executed last command and execute the following in a cell:&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;!split -b 200m allfiles.tar.gz allfiles.tar.gz.part.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will split the archive into 200Mb blocks that you can download without a problem (if there is still a problem reduce the size by changing 200m to a lower value)&lt;/p&gt;
+&lt;p&gt;Then when you have downloaded all the split files reunite them on your system using the following command line (in a linux environment, or use cmder if you are on Windows):&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;cat allfiles.tar.gz.part.* &amp;gt; allfiles.tar.gz&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS: This is in fact valid in any Jupyter-notebook hub&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;https://www.reddit.com/r/learnmachinelearning/comments/7er5ps/coursera_downloading_all_the_assignments_jupyter/?st=jfgfl0xh&amp;#x26;sh=70d43f00&quot;&gt;https://www.reddit.com/r/learnmachinelearning/comments/7er5ps/coursera_downloading_all_the_assignments_jupyter/?st=jfgfl0xh&amp;#x26;sh=70d43f00&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Install cuda 9.1 Ubuntu 16.04 notes]]></title><description><![CDATA[Use .deb (network) method https://developer.nvidia.com/cuda-downloads?targetos=Linux&targetarch=x8664&targetdistro=Ubuntu&targetversion=160…]]></description><link>https://ptgamr.github.io/2018-03-27-install-cuda-9.1-ubuntu-16.04-notes/</link><guid isPermaLink="false">https://ptgamr.github.io/2018-03-27-install-cuda-9.1-ubuntu-16.04-notes/</guid><pubDate>Tue, 27 Mar 2018 00:00:00 GMT</pubDate><content:encoded>&lt;ul&gt;
+&lt;li&gt;Use .deb (network) method&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;#x26;target_arch=x86_64&amp;#x26;target_distro=Ubuntu&amp;#x26;target_version=1604&amp;#x26;target_type=debnetwork&quot;&gt;https://developer.nvidia.com/cuda-downloads?target&lt;em&gt;os=Linux&amp;#x26;target&lt;/em&gt;arch=x86&lt;em&gt;64&amp;#x26;target&lt;/em&gt;distro=Ubuntu&amp;#x26;target&lt;em&gt;version=1604&amp;#x26;target&lt;/em&gt;type=debnetwork&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download driver at  www.nvidia.com/drivers, not not use PPA &lt;code class=&quot;language-text&quot;&gt;sudo add-apt-repository ppa:graphics-drivers&lt;/code&gt; because it’s not maintained by NVIDIA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://devtalk.nvidia.com/default/topic/1030959/cuda-9-1-setup-and-nvidia-390-driver-not-found-on-ubuntu-16-04/?offset=2&quot;&gt;Ref&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Neuron network learning]]></title><description><![CDATA[Residual Networks - v2 In the Residual Networks programming excersise, there is one explaination about how ResNet works: We also saw in…]]></description><link>https://ptgamr.github.io/2018-03-13-neuron-network-learning/</link><guid isPermaLink="false">https://ptgamr.github.io/2018-03-13-neuron-network-learning/</guid><pubDate>Sun, 18 Sep 2016 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;Residual Networks - v2&lt;/h3&gt;
+&lt;p&gt;In the Residual Networks programming excersise, there is one explaination about how ResNet works:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We also saw in lecture that having ResNet blocks with the shortcut also makes it very easy for one of the blocks to learn an identity function. This means that you can stack on additional ResNet blocks with little risk of harming training set performance. (There is also some evidence that the ease of learning an identity function—even more than skip connections helping with vanishing gradients—accounts for ResNets’ remarkable performance.)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Q: Why is that? What is “learning an identity function”? What is it used for in the learning process?&lt;/strong&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[FYI: UpNext music player has been removed from Chrome Web Store]]></title><description><![CDATA[P/S: you can still download the extension & install it yourself (version 1.2.14) Github Dropbox Here is the email from Google: {% highlight…]]></description><link>https://ptgamr.github.io/2016-06-25-fyi-upnext-music-player-has-been-removed-from-chrome-web-store/</link><guid isPermaLink="false">https://ptgamr.github.io/2016-06-25-fyi-upnext-music-player-has-been-removed-from-chrome-web-store/</guid><pubDate>Fri, 24 Jun 2016 13:38:45 GMT</pubDate><content:encoded>&lt;p&gt;P/S: you can still download the extension &amp;#x26; install it yourself (version 1.2.14)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ptgamr/upnext/blob/master/upnext-1.2.14.zip?raw=true&quot;&gt;Github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.dropbox.com/s/h11rjlet74r3m4v/upnext-1.2.14.zip?dl=0&quot;&gt;Dropbox&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here is the email from Google:&lt;/p&gt;
+&lt;p&gt;{% highlight html %}&lt;/p&gt;
+&lt;p&gt;Dear Developer,&lt;/p&gt;
+&lt;p&gt;Your Google Chrome item, “UpNext Music Player,” with ID: dgkfcdlmdppfhbfmooinbcejdaplobpk did not comply with our policies and was removed from the Google Chrome Web Store.&lt;/p&gt;
+&lt;p&gt;Your item did not comply with the following section of our policy:&lt;/p&gt;
+&lt;p&gt;We don’t allow products or services that facilitate unauthorized access to content on websites, such as circumventing paywalls or login restrictions. We also don’t allow products or services that encourage, facilitate, or enable the unauthorized access, download, or streaming of copyrighted content or media.&lt;/p&gt;
+&lt;p&gt;If you’d like to re-submit your item, please make the appropriate changes to the item so that it complies with our policies, then re-publish it in your developer dashboard. Please reply to this email for issues regarding this item removal.&lt;/p&gt;
+&lt;p&gt;*Please keep in mind that your re-submitted item will not be immediately published live in the store. All re-submitted items undergo a strict compliance review and will be re-published if the item passes review.&lt;/p&gt;
+&lt;p&gt;*Important Note
+Repeated or egregious violations in the store may result in your developer account being banned from the store. This may also result in the suspension of related Google services associated with your Google account. All re-submitted items will continue to be subject to Chrome Web Store policies and terms of service.&lt;/p&gt;
+&lt;p&gt;Thank you for your cooperation,
+Google Chrome Web Store team&lt;/p&gt;
+&lt;p&gt;{% endhighlight %}&lt;/p&gt;</content:encoded></item><item><title><![CDATA[EmberJS Links]]></title><description><![CDATA[RFC for reference unification: you’re now able get the relationship’s id without triggering a request. Available since Ember-Data 2.4 https…]]></description><link>https://ptgamr.github.io/2016-05-18-emberjs/</link><guid isPermaLink="false">https://ptgamr.github.io/2016-05-18-emberjs/</guid><pubDate>Wed, 18 May 2016 01:32:45 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;RFC for reference unification&lt;/strong&gt;: you’re now able get the relationship’s id without triggering a request. Available since Ember-Data 2.4&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/emberjs/rfcs/pull/57&quot;&gt;https://github.com/emberjs/rfcs/pull/57&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ArrayProxy is dead&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://vimeo.com/160234990&quot;&gt;https://vimeo.com/160234990&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[My Front-end Universe]]></title><description><![CDATA[Architect & Pattern “React: Mixins Considered Harmful” https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html https…]]></description><link>https://ptgamr.github.io/2016-03-02-front-end-universe/</link><guid isPermaLink="false">https://ptgamr.github.io/2016-03-02-front-end-universe/</guid><pubDate>Tue, 01 Mar 2016 14:06:37 GMT</pubDate><content:encoded>&lt;h1&gt;Architect &amp;#x26; Pattern&lt;/h1&gt;
+&lt;h3&gt;“React: Mixins Considered Harmful”&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html&quot;&gt;https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://news.ycombinator.com/item?id=12087796&quot;&gt;https://news.ycombinator.com/item?id=12087796&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;“Container Component” parttern from React&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://medium.com/@learnreact/container-components-c0e67432e005#.76q2acit3&quot;&gt;https://medium.com/@learnreact/container-components-c0e67432e005#.76q2acit3&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Presentational and Container Components&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.5o04seadt&quot;&gt;https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.5o04seadt&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;“Smart &amp;#x26; Dump” Component&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://teropa.info/blog/2016/02/22/dumb-components-and-visual-feedback-in-angular-apps.html&quot;&gt;http://teropa.info/blog/2016/02/22/dumb-components-and-visual-feedback-in-angular-apps.html&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;Ember&lt;/h1&gt;
+&lt;p&gt;@rwjblue gist, many interesting stuffs &lt;a href=&quot;https://gist.github.com/rwjblue/8816372&quot;&gt;https://gist.github.com/rwjblue/8816372&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;My list of some awesome articles &amp;#x26; stuffs: &lt;a href=&quot;https://gist.github.com/ptgamr/0308ad0d62465f1ea447&quot;&gt;https://gist.github.com/ptgamr/0308ad0d62465f1ea447&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;Angular&lt;/h1&gt;
+&lt;p&gt;Refactoring to Component &lt;a href=&quot;http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html&quot;&gt;http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Smart Vs Dump Dilemma:
+&lt;a href=&quot;https://www.reddit.com/r/angularjs/comments/48fvh2/smart_vs_dumb_dilemma_thoughts/&quot;&gt;https://www.reddit.com/r/angularjs/comments/48fvh2/smart_vs_dumb_dilemma_thoughts/&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;React&lt;/h1&gt;
+&lt;p&gt;Best Tutorial for Redux &lt;a href=&quot;http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html&quot;&gt;http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;React.js Conf 2015 - Making your app fast with high-performance components &lt;a href=&quot;https://www.youtube.com/watch?v=KYzlpRvWZ6c&quot;&gt;https://www.youtube.com/watch?v=KYzlpRvWZ6c&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Free Redux @egghead &lt;a href=&quot;https://egghead.io/series/getting-started-with-redux&quot;&gt;https://egghead.io/series/getting-started-with-redux&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;CSS/SASS&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;http://bourbon.io/&quot;&gt;http://bourbon.io/&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[One directive, multiple controllers & controllerAs]]></title><description><![CDATA[You can pass multiple controller in to the  property while declaring a directive {% highlight javascript %}
+app.directive(‘myDirective…]]></description><link>https://ptgamr.github.io/2015-10-23-one-directive-multiple-controllers-controlleras/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-10-23-one-directive-multiple-controllers-controlleras/</guid><pubDate>Fri, 23 Oct 2015 08:20:20 GMT</pubDate><content:encoded>&lt;p&gt;You can pass multiple controller in to the &lt;code class=&quot;language-text&quot;&gt;require&lt;/code&gt; property while declaring a directive&lt;/p&gt;
+&lt;p&gt;{% highlight javascript %}
+app.directive(‘myDirective’, function () {
+return{
+restrict: “A”,
+require:[‘^parentDirective’, ‘^ngModel’],
+link: function ($scope, $element, $attrs, controllersArr) {&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;  // parentDirective controller
+  controllersArr[0].someMethodCall();
+
+  // ngModel controller
+  controllersArr[1].$setViewValue();
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;  }
+});
+{% endhighlight %}&lt;/p&gt;
+&lt;p&gt;Want to use &lt;code class=&quot;language-text&quot;&gt;controllerAs&lt;/code&gt; syntax for your child directive, but still want to access parent directive’s controller?&lt;/p&gt;
+&lt;p&gt;{% highlight javascript %}
+app.directive(‘myDirective’, function () {
+return{
+restrict: “A”,
+require:[‘^parentDirective’, ‘myDirective’],
+controller: ‘myDirectiveController’,
+controllerAs: ‘childVm’,
+link: function ($scope, $element, $attrs, ctrls) {
+var parentCtrl = ctrls[0];&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;    var childVm = ctrls[1];
+
+    // and do stuffs
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;  }
+});
+{% endhighlight %}&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Good stuff: UI-Router cheat sheet]]></title><description><![CDATA[If you didn’t find Ui-Router documentation that useful, it might be a good idea to look at this cheat sheet made by egghead.io. Very neat…]]></description><link>https://ptgamr.github.io/2015-09-21-good-stuff-ui-router-cheat-sheet/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-09-21-good-stuff-ui-router-cheat-sheet/</guid><pubDate>Mon, 21 Sep 2015 11:12:21 GMT</pubDate><content:encoded>&lt;p&gt;If you didn’t find Ui-Router documentation that useful, it might be a good idea to look at this cheat sheet made by egghead.io. Very neat!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://d2eip9sf3oo6c2.cloudfront.net/pdf/egghead-io-ui-router-cheat-sheet.pdf&quot;&gt;https://d2eip9sf3oo6c2.cloudfront.net/pdf/egghead-io-ui-router-cheat-sheet.pdf&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[TodayILearnt: angular.element(elem) was actually an alias to the jQuery constructor function]]></title><description><![CDATA[If you include jQuery in your AngularJS application. $element in your directive linking function is by default wrapped by jqLite. So you can…]]></description><link>https://ptgamr.github.io/2015-09-01-todayilearnt-angular-elementelem-was-actually-an-alias-to-the-jquery-constructor-function/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-09-01-todayilearnt-angular-elementelem-was-actually-an-alias-to-the-jquery-constructor-function/</guid><pubDate>Mon, 31 Aug 2015 12:34:03 GMT</pubDate><content:encoded>&lt;p&gt;If you include jQuery in your AngularJS application.&lt;/p&gt;
+&lt;p&gt;$element in your directive linking function is by default wrapped by jqLite. So you can only &lt;code class=&quot;language-text&quot;&gt;.find&lt;/code&gt; by tag name.&lt;/p&gt;
+&lt;p&gt;If you want to have full jQuery feature, you need to wrap your element with &lt;code class=&quot;language-text&quot;&gt;angular.element&lt;/code&gt; :)&lt;/p&gt;
+&lt;p&gt;This is quite tricky to know :)&lt;/p&gt;</content:encoded></item><item><title><![CDATA[My dokku experience]]></title><description><![CDATA[I have to say it is pretty cool. It helps to build own Heroku & mae the deployment while developing faser. Something that sucks at the…]]></description><link>https://ptgamr.github.io/2015-08-29-my-dokku-experience/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-08-29-my-dokku-experience/</guid><pubDate>Sat, 29 Aug 2015 11:18:54 GMT</pubDate><content:encoded>&lt;p&gt;I have to say it is pretty cool. It helps to build own Heroku &amp;#x26; mae the deployment while developing faser.&lt;/p&gt;
+&lt;p&gt;Something that sucks at the beginning:&lt;/p&gt;
+&lt;h5&gt;Make nginx working&lt;/h5&gt;
+&lt;p&gt;VHOST file must in /home/dokku to enable NGINX virtual hosts configuration&lt;/p&gt;
+&lt;h5&gt;Deploy to root domain&lt;/h5&gt;
+&lt;p&gt;Simple, just named your app &amp;#x3C;your.domain.com&gt; then push&lt;/p&gt;
+&lt;p&gt;Eg. &lt;code class=&quot;language-text&quot;&gt;git remote add dokku dokku@&amp;lt;ip.address&amp;gt;:&amp;lt;domain.example.com&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h5&gt;MongoDb linking&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;dokku mongodb:create &amp;lt;app&amp;gt; &amp;lt;db&amp;gt;&lt;/code&gt; is not only create the database, but also create a user for app to access the database.&lt;/p&gt;
+&lt;p&gt;Therefore, if you have another app want to access the same database, &lt;code class=&quot;language-text&quot;&gt;dokku mongodb:link &amp;lt;new_app&amp;gt; &amp;lt;db&amp;gt;&lt;/code&gt; just not work. You’ll get &lt;code class=&quot;language-text&quot;&gt;auth failed&lt;/code&gt; error.&lt;/p&gt;
+&lt;p&gt;Solution: run &lt;code class=&quot;language-text&quot;&gt;mongodb:create &amp;lt;new_app&amp;gt; &amp;lt;db&amp;gt;&lt;/code&gt; first, then &lt;code class=&quot;language-text&quot;&gt;mongodb:link&lt;/code&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[SoundCloudify has changed its name to "UpNext"]]></title><description><![CDATA[Well, SoundCloudify has been taken down from Chrome Webstore because it has SoundCloud in its name - this infringe the trademarks of…]]></description><link>https://ptgamr.github.io/2015-07-03-soundcloudify-is-now-upnext/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-07-03-soundcloudify-is-now-upnext/</guid><pubDate>Fri, 03 Jul 2015 11:52:33 GMT</pubDate><content:encoded>&lt;p&gt;Well, &lt;strong&gt;SoundCloudify&lt;/strong&gt; has been taken down from Chrome Webstore because it has &lt;strong&gt;SoundCloud&lt;/strong&gt; in its name - this infringe the trademarks of SoundCloud. Now I have to re-publish it to the store under the new name: &lt;strong&gt;UpNext&lt;/strong&gt;  - and it looks like 99.99% new :)&lt;/p&gt;
+&lt;p&gt;The original extension already has more than &lt;strong&gt;25k users&lt;/strong&gt; &amp;#x26; &lt;strong&gt;250 ratings (average 4.8 stars)&lt;/strong&gt;. Please give your support for the new one by leaving your review &amp;#x26; rating. It will be a big big motivation for me to move on.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/upnext-music-player/dgkfcdlmdppfhbfmooinbcejdaplobpk&quot;&gt;Click here to download UpNext&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://github.com/ptgamr/upnext&quot;&gt;GitHub repo location has also changed&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/gSUHUBw.png&quot; alt=&quot;UpNext Music Player for Chrome&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Thank you for using UpNext!&lt;/p&gt;
+&lt;p&gt;Author,
+@ptgamr&lt;/p&gt;</content:encoded></item><item><title><![CDATA[SoundCloudify arround the world]]></title><description><![CDATA[Hey hey, it’s more than two months since I first published SoundCloudify to the webstore. And the world is quite excited about it. Let take…]]></description><link>https://ptgamr.github.io/2015-06-06-soundcloudify-arround-the-globe/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-06-06-soundcloudify-arround-the-globe/</guid><pubDate>Fri, 05 Jun 2015 13:06:39 GMT</pubDate><content:encoded>&lt;p&gt;Hey hey, it’s more than two months since I first published SoundCloudify to the webstore. And the world is quite excited about it. Let take a look at some big tech websites talked about SoundCloudify :) I am just simply happy.&lt;/p&gt;
+&lt;h3&gt;Global&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://thenextweb.com/apps/2015/05/27/soundcloudify-is-a-slick-youtube-and-soundcloud-powered-music-player-for-chrome/&quot;&gt;TheNextWeb.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/n8dwtid.png&quot; alt=&quot;TheNextWeb - SoundCloudify is a slick YouTube and SoundCloud powered music player for Chrome&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Isarel&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.geektime.co.il/soundcloudify-is-a-cool-new-extension/&quot;&gt;GeekTime.co.il&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/ZpYVUFa.png&quot; alt=&quot;SoundCloudify at GeekTime homepage&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Spain&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.genbeta.com/herramientas/soundcloudify-reune-las-canciones-de-youtube-soundcloud-y-reddit-en-una-ventana-emergente-de-chrome&quot;&gt;Genbeta.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/zzluLZX.png&quot; alt=&quot;SoundCloudify at Spain&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Turkish&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://webrazzi.com/2015/05/27/ucretsiz-muzik-dinlemek-soundcloudify/&quot;&gt;webrazzi.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/gIumWln.png&quot; alt=&quot;SoundCloudify at webrazzi&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;VietNam&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.tinhte.vn/threads/soundcloudify-extension-cho-chrome-giup-nghe-nhac-youtube-soundcloud-de-hon-khong-can-mo-tab-rieng.2448668/&quot;&gt;TinhTe.vn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/xuAu8RR.png&quot; alt=&quot;SoundCloudify at Tinhte.vn&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://genk.vn/apps-games/soundcloudify-extension-nghe-nhac-tuyet-voi-made-in-vietnam-20150604220915036.chn&quot;&gt;GenK.vn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/ISgu6Ms.png&quot; alt=&quot;SoundCloudify at GenK&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;ToBeContinue…&lt;/h3&gt;</content:encoded></item><item><title><![CDATA[So, what is SoundCloudify & why I made it]]></title><description><![CDATA[SoundCloudify import YouTube playlist It has been more than two months since I first published SoundCloudify to Chrome Webstore. Until now…]]></description><link>https://ptgamr.github.io/2015-06-01-so-what-is-soundcloudify-why-i-made-it/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-06-01-so-what-is-soundcloudify-why-i-made-it/</guid><pubDate>Mon, 01 Jun 2015 04:53:05 GMT</pubDate><content:encoded>&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/NeDdQOt.gif&quot; alt=&quot;SoundCloudify import YouTube playlist&quot;&gt;&lt;/p&gt;
+&lt;p&gt;It has been more than two months since I first published &lt;a href=&quot;https://chrome.google.com/webstore/detail/soundcloudify/boblphpidkohagaoinepjgecndchlnbk&quot;&gt;SoundCloudify&lt;/a&gt; to Chrome Webstore. Until now, it has &lt;strong&gt;17,584 installs&lt;/strong&gt; &amp;#x26; &lt;strong&gt;155 ratings&lt;/strong&gt; (most of them are five stars). And the extension itself has find its way to &lt;a href=&quot;http://thenextweb.com/apps/2015/05/27/soundcloudify-is-a-slick-youtube-and-soundcloud-powered-music-player-for-chrome/&quot;&gt;TheNextWeb&lt;/a&gt;, and yet gaining more and more traction from music lovers all over the world. I am really happy that I had made something that people love &amp;#x26; use it!&lt;/p&gt;
+&lt;p&gt;You might or might not believe it is one of my hobby project. But yes, it truly is a hobby project :-). I started it because I just want to make a Chrome Extension with AngularJS. I am a FrontEnd developer &amp;#x26; I am a fan of Angular. It takes me about one month working at night to finish the first version. I decided to make the project open source on &lt;a href=&quot;https://github.com/ptgamr/soundcloudify&quot;&gt;GitHub&lt;/a&gt;. You can take a look if you’re a developer &amp;#x26; want to contribute or fix some bugs. Pull requests are very very welcome :-)&lt;/p&gt;
+&lt;p&gt;Later, I had a close friend who is a Backend Developer help me with the API to store user’s playlist. That’s why if you’re logged in in Chrome, your playlist will be synced accross computers.&lt;/p&gt;
+&lt;p&gt;You may ask why the extension’s interface look very much like the Spotify web player. Oh yes, that’s true! The inspiration come from Spotify with Green over Black background. It looks really sexy &amp;#x26; attractive, I like it and i decided to mimic that design. I am a web developer, not a designer. So there is no point to make it different. But did you notice that I’ve added Material Design into it? Ha! The extension look really GREAT in a Macbook Retina. Tell me if it looks great in your computer as well!&lt;/p&gt;
+&lt;p&gt;It’s really a lot of fun working with what you love and people love what you’re doing. I am now working in a &lt;strong&gt;Chrome Packaged App&lt;/strong&gt; version of the extension. And maybe later, a &lt;strong&gt;mobile version&lt;/strong&gt; as well. I am really happy because it turns out that I could reuse my code for different platforms.&lt;/p&gt;
+&lt;p&gt;And sure, I’ll carry on to bring you guy a greater music player. I’ve got a new hobby is to watching the number of users who’re currently using SoundCloudify.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/VPOehTY.jpg&quot; alt=&quot;SoundCloudify active users&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Cheers! Happy listening!&lt;/p&gt;
+&lt;div class=&quot;gatsby-resp-iframe-wrapper&quot; style=&quot;padding-bottom: 75%; position: relative; height: 0; overflow: hidden; margin-bottom: 1.0725rem&quot; &gt; &lt;iframe src=&quot;https://www.youtube.com/embed/9vwHuCC6nP8&quot; frameborder=&quot;0&quot; allowfullscreen style=&quot; position: absolute; top: 0; left: 0; width: 100%; height: 100%; &quot;&gt;&lt;/iframe&gt; &lt;/div&gt;</content:encoded></item><item><title><![CDATA[New Beginnings]]></title><description><![CDATA[Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts. Separated they live in…]]></description><link>https://ptgamr.github.io/new-beginnings/</link><guid isPermaLink="false">https://ptgamr.github.io/new-beginnings/</guid><pubDate>Thu, 28 May 2015 22:40:32 GMT</pubDate><content:encoded>&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and
 Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
 right at the coast of the Semantics, a large language ocean. A small river named
 Duden flows by their place and supplies it with the necessary regelialia.&lt;/p&gt;
@@ -92,12 +320,12 @@ to its own, safe country. But nothing the copy said could convince her and so it
 didn’t take long until a few insidious Copy Writers ambushed her, made her drunk
 with Longe and Parole and dragged her into their agency, where they abused her
 for their projects again and again.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[My Second Post!]]></title><description><![CDATA[Wow! I love blogging so much already. Did you know that “despite its name, salted duck eggs can also be made from
-chicken eggs, though the…]]></description><link>https://gatsby-starter-blog-demo.netlify.app/my-second-post/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.app/my-second-post/</guid><pubDate>Wed, 06 May 2015 23:46:37 GMT</pubDate><content:encoded>&lt;p&gt;Wow! I love blogging so much already.&lt;/p&gt;
+chicken eggs, though the…]]></description><link>https://ptgamr.github.io/my-second-post/</link><guid isPermaLink="false">https://ptgamr.github.io/my-second-post/</guid><pubDate>Wed, 06 May 2015 23:46:37 GMT</pubDate><content:encoded>&lt;p&gt;Wow! I love blogging so much already.&lt;/p&gt;
 &lt;p&gt;Did you know that “despite its name, salted duck eggs can also be made from
 chicken eggs, though the taste and texture will be somewhat different, and the
 egg yolk will be less rich.”?
 (&lt;a href=&quot;https://en.wikipedia.org/wiki/Salted_duck_egg&quot;&gt;Wikipedia Link&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;Yeah, I didn’t either.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Hello World]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://gatsby-starter-blog-demo.netlify.app/hello-world/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.app/hello-world/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
+&lt;p&gt;Yeah, I didn’t either.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Hello World]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://ptgamr.github.io/hello-world/</link><guid isPermaLink="false">https://ptgamr.github.io/hello-world/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
 &lt;p&gt;I’m sure I’ll write a lot more interesting things in the future.&lt;/p&gt;
 &lt;p&gt;Oh, and here’s a great quote from this Wikipedia on
 &lt;a href=&quot;https://en.wikipedia.org/wiki/Salted_duck_egg&quot;&gt;salted duck eggs&lt;/a&gt;.&lt;/p&gt;
@@ -310,4 +538,887 @@ __double underscores__&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This paragraph has some &lt;code class=&quot;language-text&quot;&gt;code&lt;/code&gt; in it.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;This paragraph has some `code` in it.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;https://placehold.it/200x50&quot; alt=&quot;Alt Text&quot; title=&quot;Image Title&quot;&gt;&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;![Alt Text](https://placehold.it/200x50 &amp;quot;Image Title&amp;quot;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;![Alt Text](https://placehold.it/200x50 &amp;quot;Image Title&amp;quot;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Stop Whining About New JS Frameworks]]></title><description><![CDATA[I think there’s a lot of misplaced irritation regarding the abundance of new JavaScript frameworks. It seems like many developers just want…]]></description><link>https://ptgamr.github.io/2015-04-10-stop-whining-about-new-js-frameworks-2/</link><guid isPermaLink="false">https://ptgamr.github.io/2015-04-10-stop-whining-about-new-js-frameworks-2/</guid><pubDate>Fri, 10 Apr 2015 05:24:30 GMT</pubDate><content:encoded>&lt;p&gt;I think there’s a lot of misplaced irritation regarding the abundance of new JavaScript frameworks. It seems like many developers just want someone to tell them how to build web apps. The number of options is overwhelming, and they just want to make something. I can completely understand how it can be frustrating to choose something and get started.&lt;/p&gt;
+&lt;p&gt;Here’s my advice:&lt;/p&gt;
+&lt;p&gt;Abandon the notion that there’s a “right framework,” and just choose one and get hacking. It’s likely that any framework you choose won’t be actively maintained in a year. It’s likely that any framework you choose will anticipate 95% of the things you want to do, but handle the rest a bit less gracefully. There is no clear winner for absolutely all use cases, and there will likely never be.&lt;/p&gt;
+&lt;p&gt;Don’t “learn Backbone.js.” For that matter, don’t “learn” any other framework. Learn the philosophy behind it. The architecture is much more important than the API. Learn how the framework makes you more productive. Many of these frameworks are conceptually similar, but maybe add a new feature or account for some specific use case. Some have strong opinions, some don’t. Use and read about as many different frameworks as you can. Figure out what their opinions are, and form your own. Write about your experiences.&lt;/p&gt;
+&lt;p&gt;The web development scene is going through a seriously awesome renaissance. We finally have bigger, more reliable building blocks to make things. There are lots of smart people with interesting and vastly different ideas on ways to group these pieces together to make yet larger blocks. Enjoy and appreciate this renaissance. Better yet, participate in it.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://briantford.com/blog/too-many-frameworks-qq&quot;&gt;Source: BrianFord&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Add Select Box feature to Twitter Bootstrap Dropdown]]></title><description><![CDATA[Twitter Bootstrap comes with a very nice Javascript Plugin for Dropdown. What you just need to do is mark up the HTML, include the  and you…]]></description><link>https://ptgamr.github.io/2014-12-02-extends-twitter-bootstrap-dropdown-to-act-like-a-selectbox/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-12-02-extends-twitter-bootstrap-dropdown-to-act-like-a-selectbox/</guid><pubDate>Mon, 01 Dec 2014 18:39:21 GMT</pubDate><content:encoded>&lt;p&gt;Twitter Bootstrap comes with a very nice Javascript Plugin for Dropdown. What you just need to do is mark up the HTML, include the &lt;code class=&quot;language-text&quot;&gt;bootstrap.js&lt;/code&gt; and you’ll have a nicely dropdown working.&lt;/p&gt;
+&lt;p&gt;I guess a lot of you had ever wanted that Dropdown acts like a selectbox, which means when you click to a menu item, that item will be selected, and the dropdown will be updated with that value.&lt;/p&gt;
+&lt;p&gt;There is already a great plugin outthere:&lt;a href=&quot;http://silviomoreto.github.io/bootstrap-select/&quot;&gt;bootstrap select&lt;/a&gt;, which has a full featured set of what a Modern Selectbox should do. It also support you to search the options by passing &lt;code class=&quot;language-text&quot;&gt;data-live-search=&amp;quot;true&amp;quot;&lt;/code&gt; to the markup.&lt;/p&gt;
+&lt;p&gt;This plugin convert a selectbox into a dropdown, which leads to these that you might not like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In an application where the HTML are rendered before the scripts running, user will first see the default selectbox when openning the page&lt;/li&gt;
+&lt;li&gt;It is hard for us to customize the output of a selectbox. What if we want to achive this kind of button?
+&lt;a href=&quot;http://getbootstrap.com/components/#btn-dropdowns-split&quot;&gt;http://getbootstrap.com/components/#btn-dropdowns-split&lt;/a&gt;
+It is just a different markdown for bootstrap’s dropdown.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I want something work similar, but simpler. So i decided to extend the existing bootstrap dropdown plugins to add the select box behavior:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;(function ($) {
+
+    var Dropdown = $.fn.dropdown.Constructor;
+    var toggle   = &amp;#39;[data-toggle=&amp;quot;dropdown&amp;quot;]&amp;#39;;
+
+    var getParent = function ($this) {
+        return $this.parent();
+    };
+
+    var select = function(e) {
+        if (event.type === &amp;#39;keydown&amp;#39; &amp;amp;&amp;amp; !/13/.test(e.which)) return;
+
+        var $this = $(this);
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if ($this.is(&amp;#39;.disabled, :disabled&amp;#39;)) return;
+
+        var $parent  = getParent($this);
+        var isActive = $parent.hasClass(&amp;#39;open&amp;#39;);
+
+        var desc = &amp;#39; li:not(.divider):visible a&amp;#39;;
+        var $items = $parent.find(&amp;#39;[data-select=&amp;quot;true&amp;quot;]&amp;#39; + desc);
+
+        if (!$items.length) return;
+
+        var index = $items.index(e.target);
+
+        var $selected = $items.eq(index);
+            selectedText = $items.eq(index).text();
+
+        //previous selected
+        var $previousSelect = $this.find(&amp;#39;.selected&amp;#39;);
+
+        if (!$selected.hasClass(&amp;#39;selected&amp;#39;)) {
+            $selected.parent(&amp;#39;li&amp;#39;).addClass(&amp;#39;selected&amp;#39;);
+            $parent.find(&amp;#39;.btn&amp;#39;).first().text(selectedText);
+
+            $previousSelect.removeClass(&amp;#39;selected&amp;#39;);
+        }
+
+        //focus to the selectbox after select
+        $parent.find(toggle).dropdown(&amp;#39;toggle&amp;#39;).trigger(&amp;#39;focus&amp;#39;);
+
+        //trigger the event
+        $parent.trigger(e = $.Event(&amp;#39;selected.bs.dropdown&amp;#39;, {relatedTarget : this}));
+    };
+
+    $.extend(true, Dropdown.prototype, {select: select});
+
+    $(document)
+        .on(&amp;#39;keydown.bs.dropdown.data-api&amp;#39;, &amp;#39;[data-select=&amp;quot;true&amp;quot;]&amp;#39;, Dropdown.prototype.select)
+        .on(&amp;#39;click.bs.dropdown.data-api&amp;#39;, &amp;#39;[data-select=&amp;quot;true&amp;quot;]&amp;#39;, Dropdown.prototype.select);
+
+})(jQuery);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;What does the code do?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;First it introduce a new data attribute: &lt;code class=&quot;language-text&quot;&gt;data-select=&amp;quot;true&amp;quot;&lt;/code&gt; on the &lt;code class=&quot;language-text&quot;&gt;.dropdown-menu&lt;/code&gt; list&lt;/li&gt;
+&lt;li&gt;It bind a special handler called &lt;code class=&quot;language-text&quot;&gt;select&lt;/code&gt; to the &lt;code class=&quot;language-text&quot;&gt;keydown&lt;/code&gt; &amp;#x26; &lt;code class=&quot;language-text&quot;&gt;click&lt;/code&gt; event on the &lt;code class=&quot;language-text&quot;&gt;[data-select=&amp;quot;true&amp;quot;]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;This way, the original plugin will be kept untouched. Also its behavior. You only add the new functionality when you wanted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Usage &amp;#x26; Contribution&lt;/h3&gt;
+&lt;p&gt;I’ve created a &lt;a href=&quot;https://github.com/ptgamr/bootstrap-dropdown-select-extension&quot;&gt;Github&lt;/a&gt; repository for it. Please come and have a look. If you have any idea to improve it, don’t hesitate to fork it.&lt;/p&gt;
+&lt;p&gt;Cheers.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Bootstrap 3 Tips and Tricks]]></title><description><![CDATA[Optionally Remove the Gutter Padding from Columns Bootstrap lets you customize and compile your own build based on your needs. This is…]]></description><link>https://ptgamr.github.io/2014-11-29-bootstrap-3-tips-and-tricks/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-11-29-bootstrap-3-tips-and-tricks/</guid><pubDate>Fri, 28 Nov 2014 22:00:31 GMT</pubDate><content:encoded>&lt;h2&gt;Optionally Remove the Gutter Padding from Columns&lt;/h2&gt;
+&lt;p&gt;Bootstrap lets you customize and compile your own build based on your needs. This is anything from colors, container sizes, and to gutter padding size. However, sometimes you’ll come across an instance where you just want a single row with no padding. Most cases you’ll just individually select the column and kill off the padding with CSS. However, you can build your own utility class helper to do this on the fly. This utility class will cover all column sizes and still supports full responsiveness. Here’s the CSS snippet: &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;.no-gutter &amp;gt; [class*=&amp;#39;col-&amp;#39;] {
+    padding-right:0;
+    padding-left:0;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And here’s how you can use it in your HTML:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-markup&quot;&gt;&lt;pre class=&quot;language-language-markup&quot;&gt;&lt;code class=&quot;language-language-markup&quot;&gt;&amp;lt;div class=&amp;quot;row no-gutter&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;col-md-4&amp;quot;&amp;gt;
+        ...
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;col-md-4&amp;quot;&amp;gt;
+        ...
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;col-md-4&amp;quot;&amp;gt;
+        ...
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Custom Container Sizes&lt;/h2&gt;
+&lt;p&gt;Like it or not, sometimes you’ll be working on a design that doesn’t follow a grid system or a designer who likes to push the boundaries farther and use different grid column sizes on different rows throughout a page and / or site. Bootstrap columns automatically fill to it’s parent container. So if you need a smaller container or a larger container, you can easily extend the Bootstrap core and make your own container classes. Here’s an example:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;@media (min-width: 768px) {
+    .container-small {
+        width: 300px;
+    }
+    .container-large {
+        width: 970px;
+    }
+}
+@media (min-width: 992px) {
+    .container-small {
+        width: 500px;
+    }
+    .container-large {
+        width: 1170px;
+    }
+}
+@media (min-width: 1200px) {
+    .container-small {
+        width: 700px;
+    }
+    .container-large {
+        width: 1500px;
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now the only thing you need to worry about is overflow issues if say a container you made is larger then the device window. For example with the .container-large class, if a user has a browser window of 1200px, it will create this nasty overflow issue. Here’s the fix for that.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;.container-small, .container-large {
+    max-width: 100%;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Use Heading Classes to Save Time and Stay Semantic&lt;/h2&gt;
+&lt;p&gt;A design sometimes will have elements that don’t always match best practice for having semantic markup. What I mean by this is usually your h1 tag is followed by an h2 and so on. This isn’t necessarily a bad thing when this happens, it’s just something to watch out for because at the end of the day, one of the most important things to make sure of is that your markup is structured in a way that is friendly to read for Google and other Bots.&lt;/p&gt;
+&lt;p&gt;You can swap out Headings styles with different classes. Take a look at the example code below to see it in action:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-markup&quot;&gt;&lt;pre class=&quot;language-language-markup&quot;&gt;&lt;code class=&quot;language-language-markup&quot;&gt;&amp;lt;h1 class=&amp;quot;h2&amp;quot;&amp;gt;Heading 1 that looks like Heading 2&amp;lt;/h1&amp;gt;
+&amp;lt;h2 class=&amp;quot;h4&amp;quot;&amp;gt;Heading 2 that looks like Heading 4&amp;lt;/h2&amp;gt;
+&amp;lt;h3 class=&amp;quot;h1&amp;quot;&amp;gt;Heading 3 that looks like Heading 1&amp;lt;/h3&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Responsive Video Embeds that Maintain Aspect Ratio&lt;/h2&gt;
+&lt;p&gt;When Bootstrap 3.2 came out, it came out with an additional helper class to make it easier to make iframes (like YouTube embeds) responsive while maintaining a certain aspect ratio. It’s extremely easy to use these, just add the following code to your markup:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-markup&quot;&gt;&lt;pre class=&quot;language-language-markup&quot;&gt;&lt;code class=&quot;language-language-markup&quot;&gt;&amp;lt;!-- 16:9 aspect ratio --&amp;gt;
+&amp;lt;div class=&amp;quot;embed-responsive embed-responsive-16by9&amp;quot;&amp;gt;
+    &amp;lt;iframe class=&amp;quot;embed-responsive-item&amp;quot; src=&amp;quot;//www.youtube.com/embed/ePbKGoIGAXY&amp;quot;&amp;gt;&amp;lt;/iframe&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;!-- 4:3 aspect ratio --&amp;gt;
+&amp;lt;div class=&amp;quot;embed-responsive embed-responsive-4by3&amp;quot;&amp;gt;
+    &amp;lt;iframe class=&amp;quot;embed-responsive-item&amp;quot; src=&amp;quot;//www.youtube.com/embed/ePbKGoIGAXY&amp;quot;&amp;gt;&amp;lt;/iframe&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice how the iframe doesn’t include frameborder=“0”. This is because Bootstrap will actually normalize any ugly outlines for you with this helper class.&lt;/p&gt;
+&lt;h2&gt;Responsive Utility Classes Need a Display Property&lt;/h2&gt;
+&lt;p&gt;With Bootstrap 3.2 being released, they updated the way responsive utility classes work. Normally you would just assign &lt;code class=&quot;language-text&quot;&gt;.visible-xs&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;.visible-sm&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;.visible-md&lt;/code&gt;, and &lt;code class=&quot;language-text&quot;&gt;.visible-lg&lt;/code&gt; to hide or show certain elements at different device widths. Now, you actually have to specify a “state” as well of either block, inline, or inline-block. This maximizes your control, but if you’re confused on which on to use, just use block. Here’s some examples:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;/* With * being xs, sm, md, or lg */
+.visible-*-block {}
+.visible-*-inline {}
+.visible-*-inline-block {}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Extend the Class, Don’t Override It&lt;/h2&gt;
+&lt;p&gt;I often see front-end code where developers completely override Bootstrap styles to customize buttons and other elements rather than extending the existing classes. This gets messy real fast. It’s much easier to maintain if you just extend the existing classes. For example, let’s make a completely flat and yellow button called .btn-yellow to demo the principle.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;.btn-yellow {
+  background: rgb(250, 255, 140);
+  color: #574500;
+  border: none;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important; /* !important tags aren&amp;#39;t necessarily always bad */
+}
+.btn-yellow:hover, .btn-yellow:focus {
+  background: rgb(252, 255, 179);
+}
+.btn-yellow:active {
+  background: rgb(247, 255, 71);
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This way you can still use things like .btn-lg or .btn-block to customize your buttons. Now, I’ll also make a class called .btn-xxl:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-css&quot;&gt;&lt;pre class=&quot;language-language-css&quot;&gt;&lt;code class=&quot;language-language-css&quot;&gt;.btn-xxl {
+  padding: 20px 26px;
+  font-size: 35px;
+  border-radius: 8px;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Building a base CSS by extending the classes can prove to be extremely helpful in the long run and can really speed up your front-end development.&lt;/p&gt;
+&lt;h2&gt;* { box-sizing: border-box; }&lt;/h2&gt;
+&lt;p&gt;My favorite thing about Bootstrap 3 versus 2 is that it adopted the new box-sizing: border-box property for all elements and pseudo-elements (:before and :after). This might be more obvious to some, but what this does is changes the way the CSS box-model works. When this is enabled the width and height properties include the padding and border, but not the margin. In laymen terms, if you add padding, your element isn’t going to grow in size. Instead, the element’s contents gets pushed closer and closer towards the center of the box.&lt;/p&gt;
+&lt;p&gt;Bootstrap 2 didn’t use this method, and I imagine people people who recently switch will be thrown off by this since it goes against how most people are taught CSS in the first-place. After you get used to it though, it starts to make responsive web development a lot easier and will probably be your new default even without Bootstrap. I think the idea to do it this way was first introduced by Paul Irish from this post. &lt;/p&gt;
+&lt;h2&gt;Your Respond.js include might be all wrong&lt;/h2&gt;
+&lt;p&gt;Respond.js is is an excellent polyfill for bringing media queries to legacy browsers (for this case, getting Bootstrap 3 to work with IE8). Making sure that respond.js is even actually working will make your cross-browser tests much easier. I learned that Respond.js can fail based on two things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Where it is located in the document&lt;/li&gt;
+&lt;li&gt;If you’re loading your styles from a CDN&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Load respond.js after your CSS&lt;/h3&gt;
+&lt;p&gt;If for whatever reason you are loading respond.js before your styles, this will cause the polyfill to fail. You need to load respond.js after your styles. If you have inline styles, respond.js should technically be loaded after that as well.&lt;/p&gt;
+&lt;h3&gt;A CDN can create cross-domain errors&lt;/h3&gt;
+&lt;p&gt;Respond.js works by requesting a copy of your CSS via AJAX. If you have your CSS on a different domain, such as a CDN, per security settings of browsers, it won’t be able to load the CSS assets. It’s recommended that you create a proxy-page to enable cross-domain communication. You can read about doing that at their official docs. The quickest and easiest solution though is to just host the Bootstrap 3 assets and the Respond.js assets yourself (don’t use a CDN). This is a quick an easy fix that would work for most people. You should evaluate the pros and cons of ditching the CDN for your specific project since using the CDN has obvious performance benefits.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://scotch.io/bar-talk/bootstrap-3-tips-and-tricks-you-still-might-not-know&quot;&gt;scotch.io&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[My favourite Modules Pattern & JQuery Plugin boilerplates]]></title><description><![CDATA[The Reavealing Module Pattern JQuery Plugin Boilerplate]]></description><link>https://ptgamr.github.io/2014-11-26-my-favourite-modules-pattern-jquery-plugin-boilerplates/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-11-26-my-favourite-modules-pattern-jquery-plugin-boilerplates/</guid><pubDate>Wed, 26 Nov 2014 07:02:41 GMT</pubDate><content:encoded>&lt;h3&gt;The Reavealing Module Pattern&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    //define your app&amp;#39;s namespace
+    var app = app || {};
+    
+    //your module inside &amp;#39;app&amp;#39; namespace
+    var app.myModule = (function ($) {
+
+        // &amp;#39;this&amp;#39; refers to global window
+
+        //private variable
+        var secret = {
+        	message: &amp;#39;I am pretty awesome&amp;#39;
+        };
+        
+        //private function
+        var _tellTheSecret = function() {
+        	return secret.message;
+        }
+        
+        //public function
+        function init() {
+        	//init the module base on the present of the element on the page
+            
+            if ($(&amp;#39;#some-element&amp;#39;).length) {
+            
+            	//your initialize code here
+                //...
+            }
+        }
+		
+        // variables and functions private unless attached to API below
+        // define the public API
+        var API = {};
+        API.init = init;
+
+        return API;
+    }(jQuery));&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;JQuery Plugin Boilerplate&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    ;(function($) {
+        // wrap code within anonymous function: a private namespace
+
+        // replace &amp;#39;MyPlugin&amp;#39; and &amp;#39;myplugin&amp;#39; below in your own plugin...
+
+        // constructor function for the logical object bound to a
+        // single DOM element
+        function MyPlugin(elem, options) {
+
+            // remember this object as self
+            var self = this;
+            // remember the DOM element that this object is bound to
+            self.$elem = $(elem);
+
+            // default options
+            var defaults = {
+                msg: &amp;quot;You clicked me!&amp;quot;
+            };
+            // mix in the passed-in options with the default options
+            self.options = $.extend({}, defaults, options);
+
+            // just some private data
+            self.count = 1;
+
+            init();
+
+            // initialize this plugin
+            function init() {
+
+                // set click handler
+                self.$elem.click(click_handler);
+            }
+
+            // private click handler
+            function click_handler(event) {
+                alert(self.options.msg + &amp;quot; &amp;quot; + self.count);
+                self.count += 1;
+            }
+
+            // public method to change msg
+            function change_msg(msg) {
+                self.options.msg = msg;
+            }
+
+            // define the public API
+            var API = {};
+            API.change_msg = change_msg;
+            return API;
+        }
+
+        // attach the plugin to jquery namespace
+        $.fn.myplugin = function(options) {
+            return this.each(function() {
+                // prevent multiple instantiation
+                if (!$(this).data(&amp;#39;myplugin&amp;#39;))
+                    $(this).data(&amp;#39;myplugin&amp;#39;, new MyPlugin(this, options));
+            });
+        };
+    })(jQuery);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[AngularJS - Differences between the service(), factory(), and provide() methods]]></title><description><![CDATA[In Angular, services are singleton objects that are created when necessary and are never cleaned up until the end of the application life…]]></description><link>https://ptgamr.github.io/2014-11-14-angularjs-differences-between-the-service-factory-and-provide-methods/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-11-14-angularjs-differences-between-the-service-factory-and-provide-methods/</guid><pubDate>Thu, 13 Nov 2014 18:23:06 GMT</pubDate><content:encoded>&lt;p&gt;In Angular, services are singleton objects that are created when necessary and are never cleaned up until the end of the application life-cycle (when the browser is closed). Controllers are destroyed and cleaned up when they are no longer needed.&lt;/p&gt;
+&lt;p&gt;This is why we can’t dependably use controllers to share data across our application, especially when using routing&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Services are designed to be the glue between controllers, the minions of data, the slaves of functionality, the worker-bees of our application.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;3 ways to creat a service in AngularJS&lt;/h3&gt;
+&lt;h3&gt;factory()&lt;/h3&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;factory()&lt;/code&gt; method allows us to define a service by returning an object that contains service functions and service data. The service definition function is where we place our injectable services, such as $http and $q. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;  angular.module(&amp;#39;myApp.services&amp;#39;)
+  	.factory(&amp;#39;User&amp;#39;, function($http) { // injectables go here
+        var backendUrl = &amp;quot;http://localhost:3000&amp;quot;;
+        var service = {
+          // our factory definition
+          user: {},
+          setName: function(newName) { 
+          service.user[&amp;#39;name&amp;#39;] = newName; 
+          },
+       	  setEmail: function(newEmail) {
+            service.user[&amp;#39;email&amp;#39;] = newEmail;
+          },
+          save: function() {
+            return $http.post(backendUrl + &amp;#39;/users&amp;#39;, {
+            	user: service.user
+          	});
+          }
+        };
+        return service;
+});&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Using the factory() in our app&lt;/h4&gt;
+&lt;p&gt;It’s easy to use the factory in our application as we can simply inject it where we need it at run-time &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular.module(&amp;#39;myApp&amp;#39;)
+    .controller(&amp;#39;MainCtrl&amp;#39;, function($scope, User) {
+      $scope.saveUser = User.save;
+    });&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;When to use the factory() method&lt;/h4&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;factory()&lt;/code&gt; method is a great choice to use to build a factory when we just need a collection of methods and data and don’t need to do anything especially complex with our service.&lt;/p&gt;
+&lt;p&gt;We cannot use the &lt;code class=&quot;language-text&quot;&gt;factory()&lt;/code&gt; method when we need to configure our service from the &lt;code class=&quot;language-text&quot;&gt;.config()&lt;/code&gt; function.&lt;/p&gt;
+&lt;h3&gt;service()&lt;/h3&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;service()&lt;/code&gt; method, on the other hand allows us to create a service by defining a constructor function. We can use a prototypical object to define our service, instead of a raw javascript object. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;	angular.module(&amp;#39;myApp.services&amp;#39;)
+    .service(&amp;#39;User&amp;#39;, function($http) { // injectables go here
+      var self = this; // Save reference
+      this.user = {};
+      this.backendUrl = &amp;quot;http://localhost:3000&amp;quot;;
+      this.setName = function(newName) {
+        self.user[&amp;#39;name&amp;#39;] = newName;
+      }
+      this.setEmail = function(newEmail) {
+        self.user[&amp;#39;email&amp;#39;] = newEmail;
+      }
+      this.save = function() {
+        return $http.post(self.backendUrl + &amp;#39;/users&amp;#39;, {
+          user: self.user
+        })
+      }
+    });&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Using the factory() in our app&lt;/h4&gt;
+&lt;p&gt;It’s easy to use the factory in our application as we can simply inject it where we need it at run-time &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular.module(&amp;#39;myApp&amp;#39;)
+    .controller(&amp;#39;MainCtrl&amp;#39;, function($scope, User) {
+      $scope.saveUser = User.save;
+    }); &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;When to use the service() method&lt;/h4&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;service()&lt;/code&gt; method is great for creating services where we need a bit more control over the functionality required by our service. It’s also mostly guided by preference to use this instead of referring to the service&lt;/p&gt;
+&lt;p&gt;We cannot use the &lt;code class=&quot;language-text&quot;&gt;service()&lt;/code&gt; method when we need to configure our service from the &lt;code class=&quot;language-text&quot;&gt;.config()&lt;/code&gt; function.&lt;/p&gt;
+&lt;h3&gt;provide()&lt;/h3&gt;
+&lt;p&gt;The lowest level way to create a service is by using the provide() method. This is the only way to create a service that we can configure using the .config() function.&lt;/p&gt;
+&lt;p&gt;Unlike the previous to methods, we’ll set the injectables in a defined this.$get() function definition. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular.module(&amp;#39;myApp.services&amp;#39;)
+    .provider(&amp;#39;User&amp;#39;, function() {
+      this.backendUrl = &amp;quot;http://localhost:3000&amp;quot;;
+      this.setBackendUrl = function(newUrl) {
+        if (url) this.backendUrl = newUrl;
+      }
+      this.$get = function($http) { // injectables go here
+        var self = this;
+        var service = {
+          user: {},
+          setName: function(newName) {
+            service.user[&amp;#39;name&amp;#39;] = newName;
+          },
+          setEmail: function(newEmail) {
+            service.user[&amp;#39;email&amp;#39;] = newEmail;
+          },
+          save: function() {
+            return $http.post(self.backendUrl + &amp;#39;/users&amp;#39;, {
+              user: service.user
+            })
+          }
+        };
+        return service;
+      }
+    });&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Using the provider() in our app&lt;/h4&gt;
+&lt;p&gt;In order to configure our service, we can inject the provider into our &lt;code class=&quot;language-text&quot;&gt;.config()&lt;/code&gt; function.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular.module(&amp;#39;myApp&amp;#39;)
+    .config(function(UserProvider) {
+    UserProvider.setBackendUrl(&amp;quot;http://myApiBackend.com/api&amp;quot;);
+    })&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can use the service in our app just like any other service now &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular.module(&amp;#39;myApp&amp;#39;)
+    .controller(&amp;#39;MainCtrl&amp;#39;, function($scope, User) {
+      $scope.saveUser = User.save;
+    });&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;When to use the &lt;code class=&quot;language-text&quot;&gt;provider()&lt;/code&gt; method&lt;/h4&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;provider()&lt;/code&gt; method is required when we want to configure our service before the app runs. For instance, if we need to configure our services to use a different back-end based upon different deployment environments (development, staging, and production).&lt;/p&gt;
+&lt;p&gt;It’s the preferred method for writing services that we intend on distributing open-source as well as it allows us to configure services without needing to hard-code configuration data.&lt;/p&gt;
+&lt;p&gt;Source: &lt;a href=&quot;http://www.ng-newsletter.com/advent2013/#!/day/1&quot;&gt;ng-newsletter&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Cordova plugin for Google Play Game Service]]></title><description><![CDATA[Recently, i developed a small hybrid game using  and it requires me to have  feature to display players highscore. Everything is fine with…]]></description><link>https://ptgamr.github.io/2014-09-24-cordova-plugin-for-google-play-game-service/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-09-24-cordova-plugin-for-google-play-game-service/</guid><pubDate>Tue, 23 Sep 2014 20:56:40 GMT</pubDate><content:encoded>&lt;p&gt;Recently, i developed a small hybrid game using &lt;code class=&quot;language-text&quot;&gt;Ionic Framework&lt;/code&gt; and it requires me to have &lt;code class=&quot;language-text&quot;&gt;Leaderboard&lt;/code&gt; feature to display players highscore.&lt;/p&gt;
+&lt;p&gt;Everything is fine with iOS, for a simple google search, you will find this plugin: &lt;a href=&quot;https://github.com/leecrossley/cordova-plugin-game-center&quot;&gt;cordova-plugin-game-center&lt;/a&gt; and intergrate it is pretty easy.&lt;/p&gt;
+&lt;p&gt;When it come to Android, i did the search again, but i do not found any suitable plugin for my purpose. Only one repository on Github and it says ‘work in-progress’, but i didn’t see any progress at all.&lt;/p&gt;
+&lt;p&gt;Decided to write my own plugin. The first time to write a Cordova plugin, i was struggling for two days to make it build successfully in Eclipse.&lt;/p&gt;
+&lt;p&gt;You can fork it here: &lt;a href=&quot;https://github.com/ptgamr/cordova-google-play-game&quot;&gt;https://github.com/ptgamr/cordova-google-play-game&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A Game that i developed using this plugin can be found here, download it and play if you like: &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://itunes.apple.com/vn/app/wow-puzzles/id916475017?mt=8&quot;&gt;&lt;img src=&quot;https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg&quot; alt=&quot;WOW PUZZLES iOS&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://play.google.com/store/apps/details?id=com.a42.xephinhtuoitho&quot;&gt;&lt;img src=&quot;https://developer.android.com/images/brand/en_app_rgb_wo_45.png&quot; alt=&quot;WOW PUZZLES Android&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Basically, the Game Service concept is similar between iOS and Android. You’ll have to get familiar with the concept of Leaderboards &amp;#x26; Achivements.&lt;/p&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;To install the plugin, please do the following command in your beloved Terminal:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cordova plugin add https://github.com/ptgamr/cordova-google-play-game.git --variable APP_ID=711269060910
+  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Please note that you have to specify the APP_ID, which is your clientId while creating the game in Google Play Developer Console. If you want to know how to retrieve your appId, please to this &lt;a href=&quot;https://developers.google.com/games/services/android/quickstart&quot;&gt;nicely Google’s guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The plugin will install &lt;code class=&quot;language-text&quot;&gt;Google Play Services&lt;/code&gt; as its dependency. It will modify your MANIFEST file &amp;#x26; res/strings.xml automatically (to add your APP_ID), follow this guide: &lt;a href=&quot;https://developer.android.com/google/play-services/setup.html&quot;&gt;https://developer.android.com/google/play-services/setup.html&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Note for using together with Cordova Plugin Admob&lt;/h3&gt;
+&lt;p&gt;For those who use this Admob plugin: &lt;a href=&quot;https://github.com/floatinghotpot/cordova-plugin-admob&quot;&gt;https://github.com/floatinghotpot/cordova-plugin-admob&lt;/a&gt; together with my plguin, you’ll probaly have the error during installation, because it use the old Admob SDK:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;dependency id=&amp;quot;com.google.admobsdk-ios&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I give it a FORK &lt;a href=&quot;https://github.com/ptgamr/cordova-plugin-admob&quot;&gt;here&lt;/a&gt;, to remove the Admod SDK as the dependency. Please consider use this version together with &lt;code class=&quot;language-text&quot;&gt;Codova Google Play Game&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you have any question using the plugin, please wrote me a comment, or creat the issue on Github.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[CSS3: Translate3d vs Translate performance]]></title><description><![CDATA[Recently i’m develop a small game using Ionic Framework and there are a bit of movement inside the game that require me to use CSS…]]></description><link>https://ptgamr.github.io/2014-09-13-translate3d-vs-translate-performance/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-09-13-translate3d-vs-translate-performance/</guid><pubDate>Sat, 13 Sep 2014 08:30:32 GMT</pubDate><content:encoded>&lt;p&gt;Recently i’m develop a small game using &lt;a href=&quot;http://ionicframework.com&quot;&gt;Ionic Framework&lt;/a&gt; and there are a bit of movement inside the game that require me to use CSS3 transition.&lt;/p&gt;
+&lt;p&gt;At first, i think using translate(x,y) will be faster because ‘3d’ is somehow overheaded for me. What i need is just ‘2d’.&lt;/p&gt;
+&lt;p&gt;After experience the lagging in mobile device, i did some research on the internet and very supprised that translate3d(x,y,z) is faster in most of browser. After i apply this into my game, smooth transition is detected :-)&lt;/p&gt;
+&lt;h4&gt;REASON:&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The use of translate3d pushes CSS animations into hardware acceleration. Even if you’re looking to do a basic 2d translation, use translate3d for more power! So ‘T3d’ is just better because it tells the CSS animations to push the animations in 3d power! That’s why it is faster. (The answer of Cameron Little is the proof)
+&lt;a href=&quot;http://stackoverflow.com/questions/22111256/translate3d-vs-translate-performance&quot;&gt;http://stackoverflow.com/questions/22111256/translate3d-vs-translate-performance&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And here is the test page: &lt;a href=&quot;http://jsperf.com/translate3d-vs-xy/28&quot;&gt;http://jsperf.com/translate3d-vs-xy/28&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Google Image Layout]]></title><description><![CDATA[Recently, my project required me to implement an image gallery which has the layout look like Google Image Search, Flickr Explore, Google…]]></description><link>https://ptgamr.github.io/2014-09-12-google-image-layout/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-09-12-google-image-layout/</guid><pubDate>Fri, 12 Sep 2014 09:46:14 GMT</pubDate><content:encoded>&lt;p&gt;Recently, my project required me to implement an image gallery which has the layout look like Google Image Search, Flickr Explore, Google Plus Photo Gallery. They have a really nice looking gallery, with images aligned without croping, re-ordering, and the images scale by its ratio.&lt;/p&gt;
+&lt;p&gt;I wonder how they did that, and after some investigation on the internet, i found a very nice solution. Which i will share with you here.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://ptgamr.github.io/google-image-layout/&quot;&gt;LIVE DEMO&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Algorithm&lt;/h2&gt;
+&lt;h3&gt;Initial Images&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/9d31ohG.png&quot; alt=&quot;initial&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Let say we have 3 images, width size &lt;code class=&quot;language-text&quot;&gt;w1xh1&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;w2xh2&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;w3xh3&lt;/code&gt; corespondingly. We want to align them in one line.&lt;/p&gt;
+&lt;h3&gt;Expected Alignment&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/3Krnjy5.png&quot; alt=&quot;Expected&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-text&quot;&gt;container width&lt;/code&gt; is known, now we have to find w1’xh1’, w2’xh2’, w3’xh3’.&lt;/p&gt;
+&lt;p&gt;The trick is: &lt;code class=&quot;language-text&quot;&gt;all the images of the same row are have the same height.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Which mean &lt;code class=&quot;language-text&quot;&gt;h1&amp;#39; = h2&amp;#39; = h3&amp;#39;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Appling some basic maths lead us to the Formular&lt;/p&gt;
+&lt;h3&gt;The Formular&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/IMgadeK.png&quot; alt=&quot;The Formular&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;How many images should fit in one row?&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/USNb3s9.png&quot; alt=&quot;How many images?&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Imagine that we have &lt;code class=&quot;language-text&quot;&gt;n&lt;/code&gt; images. We have to define a threshold &lt;code class=&quot;language-text&quot;&gt;maxHeight&lt;/code&gt; for the height, says i dont’ want any of the row has the height more than that. What we have to do then is to make the choice:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;start &lt;code class=&quot;language-text&quot;&gt;x = 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Extract &lt;code class=&quot;language-text&quot;&gt;x&lt;/code&gt; images from the array&lt;/li&gt;
+&lt;li&gt;calculate &lt;code class=&quot;language-text&quot;&gt;h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;if &lt;code class=&quot;language-text&quot;&gt;h &amp;lt; maxHeight&lt;/code&gt; then put those images into the row&lt;/li&gt;
+&lt;li&gt;otherwise, increase counting &lt;code class=&quot;language-text&quot;&gt;x = x + 1&lt;/code&gt;, then start over again&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;See it in action&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://ptgamr.github.io/google-image-layout/&quot;&gt;http://ptgamr.github.io/google-image-layout/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I’ve implemented a small library on &lt;a href=&quot;https://github.com/ptgamr/google-image-layout&quot;&gt;my github account&lt;/a&gt; to help you achive this easily. If you want to understand more about the implementation, pls take a look into the code. If you have any suggestion, don’t hesitate writing me a comment.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Rename your App in Cordova config.xml make the Build Failed]]></title><description><![CDATA[I’ve been struggling with XCode to make my app running after i renamed the project. To rename your iOS build: The platform will be create…]]></description><link>https://ptgamr.github.io/2014-08-28-rename-your-app-in-cordova-config-xml-make-the-build-failed/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-08-28-rename-your-app-in-cordova-config-xml-make-the-build-failed/</guid><pubDate>Thu, 28 Aug 2014 11:04:52 GMT</pubDate><content:encoded>&lt;p&gt;I’ve been struggling with XCode to make my app running after i renamed the project.&lt;/p&gt;
+&lt;h4&gt;To rename your iOS build:&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;1. run command: cordova platform rm ios
+
+2. change your app name in *config.xml*
+
+3. run command cordova platform add ios&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;The platform will be create normally, plugins are installed. But XCode build states that there are some files missing&lt;/h4&gt;
+&lt;p&gt;You need this step to solved the problem:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;copy the ios src of the plugin to 
+projektname/platforms/ios/Appname/Plugins/plugin.name.space&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It works for me!!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[How Pinterest construct their layout?]]></title><description><![CDATA[I love Pinterest because of the Pins layout. And recently, i developed a small Mobile App for choosing Hairstyles, i want to mimic Pinterest…]]></description><link>https://ptgamr.github.io/2014-08-07-how-pinterest-construct-their-layout/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-08-07-how-pinterest-construct-their-layout/</guid><pubDate>Thu, 07 Aug 2014 10:02:08 GMT</pubDate><content:encoded>&lt;p&gt;I love Pinterest because of the Pins layout. And recently, i developed a small Mobile App for choosing Hairstyles, i want to mimic Pinterest layout for my image gallery.&lt;/p&gt;
+&lt;p&gt;And here is how Pinterest do it (the algorithm):&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;#Beforehand:
+
+- Absolutely position the pin containers
+- Determine column width
+- Determine margin between columns (the gutter)
+
+#Setup an array:
+
+- Get the width of the parent container; calculate the # of columns that will fit
+- Create an empty array, with a length equaling the # of columns. Use this array to store the height of each column as you build the layout, e.g. the height of column 1 is stored as array[0]
+
+#Loop through each pin:
+
+- Put each pin in the shortest column at the moment it is added
+- &amp;quot;left:&amp;quot; === the column # (index array) times the column width + margin
+- &amp;quot;top:&amp;quot; === The value in the array (height) for the shortest column at that time
+
+Finally, add the height of the pin to the column height (array value)
+The result is lightweight. In Chrome, laying out a full page of 50+ pins takes &amp;lt;10ms&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is enough for for a fork on Github, but i found &lt;a href=&quot;http://masonry.desandro.com&quot;&gt;Masonry&lt;/a&gt;, just serve my purpose well. So why we have to re-invente the wheel? :-)&lt;/p&gt;
+&lt;p&gt;Next comming post, i will tell you how i set up Masonry in my AngularJS application, together with lazy loading (&lt;a href=&quot;https://github.com/toddmotto/echo&quot;&gt;Echo.js&lt;/a&gt; from TodMotto).&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Angular’s dependency injection annotation process]]></title><description><![CDATA[Source: Todd Motto For those familiar with Angular’s dependency injection (DI), this post will dive into some of the “under the hood…]]></description><link>https://ptgamr.github.io/2014-07-23-angulars-dependency-injection-annotation-process/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-07-23-angulars-dependency-injection-annotation-process/</guid><pubDate>Tue, 22 Jul 2014 17:17:00 GMT</pubDate><content:encoded>&lt;p&gt;Source: &lt;a href=&quot;http://toddmotto.com/angular-js-dependency-injection-annotation-process/?utm_source=ng-newsletter&amp;#x26;utm_campaign=a23834faa2-AngularJS_Newsletter_7_22_147_22_2014&amp;#x26;utm_medium=email&amp;#x26;utm_term=0_fa61364f13-a23834faa2-92599937&quot;&gt;Todd Motto&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For those familiar with Angular’s dependency injection (DI), this post will dive into some of the “under the hood” methods that power the DI process. For those who aren’t familiar with the concept, DI is a way of asking for necessary dependencies instead of passing them. We merely tell a method, function, object what dependencies we want - and tucked away we get our dependencies given to us.&lt;/p&gt;
+&lt;p&gt;So, how does this work in AngularJS?&lt;/p&gt;
+&lt;p&gt;Until now, I’ve kind of let it be a black box - it just works and I use it. But after a stint of looking through the source code, I think I’ve cracked how it all works underneath - and the implementation is &lt;em&gt;so&lt;/em&gt; clever and simple - it’s definitely worth looking into. I’ve also learned a few things along the way!&lt;/p&gt;
+&lt;h3&gt;Dependency injection in Angular&lt;/h3&gt;
+&lt;p&gt;There are three ways we can pass dependencies into Angular functions, the first cannot be minified without breaking the app, the second annotations aid minification aliasing - let’s look at them.&lt;/p&gt;
+&lt;h4&gt;1. Function arguments&lt;/h4&gt;
+&lt;p&gt;Function arguments work perfectly until we minify our app. Minification is important as we want to compress our JavaScript as much as possible, for obfuscation but mainly for performance purposes.&lt;/p&gt;
+&lt;p&gt;Let’s see how that works:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function SomeCtrl ($scope) {
+      // do something with $scope
+    }
+
+    angular
+      .module(&amp;#39;app&amp;#39;, [])
+      .controller(&amp;#39;SomeCtrl&amp;#39;, SomeCtrl);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Easy, we just pass in &lt;code class=&quot;language-text&quot;&gt;$scope&lt;/code&gt; as an argument and Angular passes it in for us.&lt;/p&gt;
+&lt;h4&gt;2: Array arguments&lt;/h4&gt;
+&lt;p&gt;Possibly the most common way to do it, we pass in an Array to an Angular module method, we’ll use a Controller in all examples to keep things easy and consistent.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function SomeCtrl ($scope) {
+      // do something with $scope
+    }
+
+    angular
+      .module(&amp;#39;app&amp;#39;, [])
+      .controller(&amp;#39;SomeCtrl&amp;#39;, [&amp;#39;$scope&amp;#39;, SomeCtrl]);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is also commonly seen as this, however, with functions inside the &lt;code class=&quot;language-text&quot;&gt;.controller()&lt;/code&gt; method:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    angular
+      .module(&amp;#39;app&amp;#39;, [])
+      .controller(&amp;#39;SomeCtrl&amp;#39;, [&amp;#39;$scope&amp;#39;, function SomeCtrl ($scope) {
+        // do something with $scope
+      }]);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;//twitter.com/John_Papa&quot;&gt;John Papa&lt;/a&gt; and I have been discussing the first pattern in depth recently and advocate it’s use over the latter, that’s another story though.&lt;/p&gt;
+&lt;h4&gt;3. $inject&lt;/h4&gt;
+&lt;p&gt;Using &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; makes things simple, and does the same as the above by annotating the dependencies:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function SomeCtrl ($scope) {
+      // do something with $scope
+    }
+
+    SomeCtrl.$inject = [&amp;#39;$scope&amp;#39;];
+
+    angular
+      .module(&amp;#39;app&amp;#39;, [])
+      .controller(&amp;#39;SomeCtrl&amp;#39;, SomeCtrl);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;What does this mean though?&lt;/h5&gt;
+&lt;p&gt;It means when our application is minified, dependency references remain intact due to Angular’s internal annotations, for example &lt;code class=&quot;language-text&quot;&gt;function ($scope) {}&lt;/code&gt; becoming &lt;code class=&quot;language-text&quot;&gt;function (a) {}&lt;/code&gt; . Visual example:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function SomeCtrl (a) {
+      // a = $scope
+    }
+
+    SomeCtrl.$inject = [&amp;#39;$scope&amp;#39;];
+
+    angular
+      .module(&amp;#39;app&amp;#39;, [])
+      .controller(&amp;#39;SomeCtrl&amp;#39;, SomeCtrl);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Angular magically maps this &lt;code class=&quot;language-text&quot;&gt;[&amp;#39;$scope&amp;#39;]&lt;/code&gt; dependency onto the local &lt;code class=&quot;language-text&quot;&gt;a&lt;/code&gt; argument variable - how does it know?!…&lt;/p&gt;
+&lt;h3&gt;Annotation process&lt;/h3&gt;
+&lt;p&gt;This is where things get seriously awesome, we’re out of API land now and deep within Angular’s source code. How does Angular map our dependencies then onto minified variables? Let’s find out.&lt;/p&gt;
+&lt;p&gt;First, there’s a bunch of &lt;code class=&quot;language-text&quot;&gt;RegExp&lt;/code&gt; variables in the source, these play a part in it ;)&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+    var FN_ARG_SPLIT = /,/;
+    var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There’s a bunch of steps that each of these RegExps correspond with, let’s follow them:&lt;/p&gt;
+&lt;p&gt;Angular turns a function it needs to annotate into a &lt;code class=&quot;language-text&quot;&gt;String&lt;/code&gt;, then reads what you’ve passed in and changes that into an Array of arguments and returns it. First, it calls the &lt;code class=&quot;language-text&quot;&gt;toString&lt;/code&gt; method on the function - I’m going to recreate the bare basics of this - it won’t be a direct copy of the source code.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    // declare our function
+    function ExampleMethod ($scope, /* $rootScope needed! */$rootScope, SomeService) {
+
+    }
+
+    // call toString on it
+    var fnString = ExampleMethod.toString();
+
+    // &amp;quot;function ExampleMethod($scope, /* $rootScope needed! */$rootScope, SomeService) {}&amp;quot;
+    console.log(fnString);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What now? Someone’s put a comment in the arguments (totally cool) but Angular needs to do some more work on this. Enter, the &lt;code class=&quot;language-text&quot;&gt;STRIP_COMMENTS&lt;/code&gt; constant:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    // &amp;quot;function ExampleMethod($scope, $rootScope, SomeService) {}&amp;quot;
+    fnString.replace(STRIP_COMMENTS, &amp;#39;&amp;#39;);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With the comments gone, Angular moves onto the next phase and calls &lt;code class=&quot;language-text&quot;&gt;String.prototype.match&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    /*
+      [
+        &amp;quot;function ExampleMethod($scope, $rootScope, SomeService) {}&amp;quot;,
+        &amp;quot;$scope, $rootScope, SomeService&amp;quot;
+      ]
+    */
+    fnString.match(FN_ARGS);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We then get the above &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; as the output. We don’t care about the first part, we just want the comma separated second item in the &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt;, which means we would do this instead to get just the &lt;code class=&quot;language-text&quot;&gt;String&lt;/code&gt; value of the second item:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    /*
+      &amp;quot;$scope, $rootScope, SomeService&amp;quot;
+    */
+    fnString.match(FN_ARGS)[1];&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, Angular calls &lt;code class=&quot;language-text&quot;&gt;fnString.split(FN_ARG_SPLIT);&lt;/code&gt;, which returns an &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; of our &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    // [&amp;quot;$scope&amp;quot;, &amp;quot; $rootScope&amp;quot;, &amp;quot; SomeService&amp;quot;]
+    fnString.split(FN_ARG_SPLIT);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You’ll notice that some of the &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; items have a single space before the name, such as &lt;code class=&quot;language-text&quot;&gt;&amp;quot; $rootScope&amp;quot;&lt;/code&gt;, this is because the function arguments were separated with a comma then space. Angular then loops over these final &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; items, replaces function arg whitespace and pushes them into a &lt;em&gt;new&lt;/em&gt; &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; called &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    var $inject = [];
+    var args = fnString.split(FN_ARG_SPLIT);
+    args.forEach(function (arg) {
+      arg.replace(FN_ARG, function (all, underscore, name) {
+        $inject.push(name);
+      });
+    });
+    return $inject;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The function returns &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt;. And we’re done. Putting the above together, I can replicate what Angular does (in a very simple form):&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+    var FN_ARG_SPLIT = /,/;
+    var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+
+    function annotate (fn) {
+      var $inject = [];
+      fn = fn.toString();
+      var first = fn.replace(STRIP_COMMENTS, &amp;#39;&amp;#39;);
+      var second = first.match(FN_ARGS)[1];
+      var third = second.split(FN_ARG_SPLIT);
+      third.forEach(function (arg) {
+        arg.replace(FN_ARG, function (all, underscore, name) {
+          $inject.push(name);
+        });
+      });
+      return $inject;
+    }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Nice! Here’s how it works:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function ExampleMethod ($scope, /* $rootScope needed! */$rootScope, SomeService) {
+
+    }
+    var annotated = annotate(ExampleMethod);
+
+    // [&amp;quot;$scope&amp;quot;, &amp;quot;$rootScope&amp;quot;, &amp;quot;SomeService&amp;quot;]
+    console.log(annotated);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This only takes into account arguments being named correctly, such as &lt;code class=&quot;language-text&quot;&gt;$scope&lt;/code&gt; instead of minified &lt;code class=&quot;language-text&quot;&gt;a&lt;/code&gt;. This means that the above method is only for annotating functions that haven’t been minified or have no Array dependencies, in other words, this code isn’t used in production if you’re minifying your code.&lt;/p&gt;
+&lt;h4&gt;Annotating the Array syntax&lt;/h4&gt;
+&lt;p&gt;This is actually really simple! Take our &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; setup, I can pass it into my &lt;code class=&quot;language-text&quot;&gt;annotate&lt;/code&gt; function:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function ExampleMethod ($scope, /* $rootScope needed! */$rootScope, SomeService) {
+
+    }
+    var arraySyntax = [&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeService&amp;#39;, ExampleMethod];
+    var annotated = annotate(arraySyntax);
+
+    // [&amp;quot;$scope&amp;quot;, &amp;quot;$rootScope&amp;quot;, &amp;quot;SomeService&amp;quot;]
+    console.log(annotated);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If we’re already this example, then Angular doesn’t need to grab the names as above, it assumes you’ve already supplied them correctly and uses your &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; order as the new arguments order, using this line in the source:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    ...
+    else if (isArray(fn)) {
+      last = fn.length - 1;
+      assertArgFn(fn[last], &amp;#39;fn&amp;#39;);
+      $inject = fn.slice(0, last);
+    }
+    ...
+
+We&amp;#39;re only interested in this part:
+
+
+    ...
+    else if (isArray(fn)) {
+      last = fn.length - 1;
+      $inject = fn.slice(0, last);
+    }
+    ...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What does it do? The &lt;code class=&quot;language-text&quot;&gt;last&lt;/code&gt; variable holds the &lt;code class=&quot;language-text&quot;&gt;Array.length - 1&lt;/code&gt;, which (very cleverly) the last item in our &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt; is the function to be invoked (the &lt;code class=&quot;language-text&quot;&gt;arraySyntax&lt;/code&gt; variable I just created above). We could write a &lt;em&gt;tiny&lt;/em&gt; function to do exactly that:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function annotate (fn) {
+      var $inject = [];
+      $inject = fn.slice(0, fn.length - 1);
+      return $inject;
+    }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Or even:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function annotate (fn) {
+      return fn.slice(0, fn.length - 1);
+    }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Both would output what we need, as &lt;code class=&quot;language-text&quot;&gt;Array.prototype.slice&lt;/code&gt; returns a portion of an &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt;, which Angular says to be the length of the &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt;, minus &lt;code class=&quot;language-text&quot;&gt;1&lt;/code&gt; - omitting our &lt;code class=&quot;language-text&quot;&gt;function&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function annotate (fn) {
+      return fn.slice(0, fn.length - 1);
+    }
+
+    // returns [&amp;quot;$scope&amp;quot;, &amp;quot;$rootScope&amp;quot;, &amp;quot;SomeService&amp;quot;]
+    var annotated = annotate([
+      &amp;#39;$scope&amp;#39;,
+      &amp;#39;$rootScope&amp;#39;,
+      &amp;#39;SomeService&amp;#39;,
+      function ExampleMethod ($scope, $rootScope, SomeService) {}
+    ]);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Annotating $inject&lt;/h4&gt;
+&lt;p&gt;Inside Angular’s annotate function, it also checks to see if &lt;code class=&quot;language-text&quot;&gt;fn.$inject&lt;/code&gt; exists, if it does, it can just return those, as we’ll have provided a setup like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function ExampleMethod ($scope, $rootScope, SomeService) {
+
+    }
+    ExampleMethod.$inject = [&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeService&amp;#39;];&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;ExampleMethod.$inject&lt;/code&gt; is a straight up &lt;code class=&quot;language-text&quot;&gt;Array&lt;/code&gt;, and Angular will run with that.&lt;/p&gt;
+&lt;h3&gt;Mapping function arguments&lt;/h3&gt;
+&lt;p&gt;This took some further digging, and the way Angular maps minified function arguments to real names is &lt;em&gt;so&lt;/em&gt; unbelievably simple! The steps are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Get the dependecy list in Array form (as we have above)&lt;/li&gt;
+&lt;li&gt;Apply the dependencies list over the top of the minified variables (pass them in as arguments when invoking the function)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We’ve already completed the first step, let’s assume we have &lt;code class=&quot;language-text&quot;&gt;[&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeService&amp;#39;]&lt;/code&gt; on standby from an &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; property on the function, and the said function with minified arguments:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function ExampleMethod (a, b, c) {
+
+    }
+    ExampleMethod.$inject = [&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeService&amp;#39;];&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;How does &lt;code class=&quot;language-text&quot;&gt;$scope&lt;/code&gt; match up with &lt;code class=&quot;language-text&quot;&gt;a&lt;/code&gt;? Easy:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function ExampleMethod (a, b, c) {
+      console.log(a, b, c);
+    }
+    ExampleMethod.$inject = [&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeService&amp;#39;];
+    ExampleMethod.apply(null, ExampleMethod.$inject);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Three lines to completely remap the underlying argument names. As they’re just placeholder arguments anyway (which Angular has read and passed in what we actually want, there isn’t really “remapping” going on, but it feels like it). This is just a simple case of invoking the function based off a predefined arguments list.&lt;/p&gt;
+&lt;p&gt;Angular doesn’t do much with the &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; property, it just gets returned from the function (after a few function checks, no manipulation), so I’ve left it out of my remade &lt;code class=&quot;language-text&quot;&gt;annotate&lt;/code&gt; function as it’ll just get returned as is.&lt;/p&gt;
+&lt;h3&gt;Altogether now&lt;/h3&gt;
+&lt;p&gt;Let’s slap it all together. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    /**
+     * annotate remake
+     */
+    var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+    var FN_ARG_SPLIT = /,/;
+    var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+
+    function annotate (fn) {
+        var $inject;
+        if (typeof fn === &amp;#39;function&amp;#39;) {
+            $inject = [];
+            fn = fn.toString();
+            var first = fn.replace(STRIP_COMMENTS, &amp;#39;&amp;#39;);
+            var second = first.match(FN_ARGS)[1];
+            var third = second.split(FN_ARG_SPLIT);
+            third.forEach(function (arg) {
+                arg.replace(FN_ARG, function(all, underscore, name){
+                    $inject.push(name);
+                  });
+            });
+        } else {
+            $inject = fn.slice(0, fn.length - 1);
+        }
+        return $inject;
+    }
+
+    /**
+     * functions
+     */
+    function withoutDependencies ($scope, $rootScope, SomeFactory) {
+      // $scope, $rootScope, SomeFactory
+      console.log($scope, $rootScope, SomeFactory);
+    }
+    function withDependencies (a, b, c) {
+      // BOOM! We did it!
+      // $scope, $rootScope, SomeFactory
+      console.log(a, b, c);
+    }
+
+    var annotatedWithout = annotate(withoutDependencies);
+    withoutDependencies.apply(null, annotatedWithout);
+
+    var annotatedWith = annotate([&amp;#39;$scope&amp;#39;, &amp;#39;$rootScope&amp;#39;, &amp;#39;SomeFactory&amp;#39;, withDependencies]);
+    withDependencies.apply(null, annotatedWith);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above &lt;code class=&quot;language-text&quot;&gt;annotate&lt;/code&gt; function invokes the &lt;code class=&quot;language-text&quot;&gt;withoutDependencies&lt;/code&gt; function without any dependencies, so &lt;code class=&quot;language-text&quot;&gt;annotate&lt;/code&gt; loops through the arguments and invokes it with each argument name directly. The &lt;code class=&quot;language-text&quot;&gt;withDependencies&lt;/code&gt; function is looking for &lt;code class=&quot;language-text&quot;&gt;a, b, c&lt;/code&gt; arguments, but what are they? We grab &lt;code class=&quot;language-text&quot;&gt;$scope, $rootScope, SomeFactory&lt;/code&gt; from the &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; property and use &lt;code class=&quot;language-text&quot;&gt;Function.prototype.apply&lt;/code&gt; to invoke the function with our &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; Array of arguments.&lt;/p&gt;
+&lt;p&gt;That’s it! This doesn’t cover how Angular physically “injects” the actual dependencies, but how it resolves the dependency names internally, I thought it was really clever, and learned a thing or two from the source. Here’s the end result in a &lt;a href=&quot;http://jsfiddle.net/toddmotto/fgFWL&quot;&gt;jsFiddle&lt;/a&gt;, inspect the &lt;code class=&quot;language-text&quot;&gt;console&lt;/code&gt; to see it working.&lt;/p&gt;
+&lt;h3&gt;Best route for performance?&lt;/h3&gt;
+&lt;p&gt;Based on the following conditions in the &lt;a href=&quot;https://code.angularjs.org/1.3.0-beta.7/angular.js&quot;&gt;Angular source&lt;/a&gt;, using &lt;code class=&quot;language-text&quot;&gt;$inject&lt;/code&gt; would be best for performance! I’ve annotated the good parts of the function:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;    function annotate(fn, strictDi, name) {
+      var $inject,
+          fnText,
+          argDecl,
+          last;
+
+      // if the function passed in is a function, let&amp;#39;s roll with it...
+      // ...there are two things that can happen inside here, either we&amp;#39;re using $inject or
+      // we aren&amp;#39;t using $inject, which means we&amp;#39;ll manually need to get the dependencies
+      // from the arguments
+      if (typeof fn === &amp;#39;function&amp;#39;) {
+
+        // !($inject = fn.$inject) checks for the presence
+        // of fn.$inject and assigns it to the $inject variable, if this is true
+        // there is no further action needed, and $inject is returned
+        // which is a very fast operation
+        if (!($inject = fn.$inject)) {
+
+          // if fn.$inject doesn&amp;#39;t exist, it&amp;#39;s bad news and we&amp;#39;re going to need to
+          // do some manual work reading the dependencies from the arguments, so they
+          // need to be spelled correctly against the proper names or they&amp;#39;ll be an
+          // unknown provider
+          $inject = [];
+          if (fn.length) {
+            if (strictDi) {
+              if (!isString(name) || !name) {
+                name = fn.name || anonFn(fn);
+              }
+              throw $injectorMinErr(&amp;#39;strictdi&amp;#39;,
+                &amp;#39;{0} is not using explicit annotation and cannot be invoked in strict mode&amp;#39;, name);
+            }
+            fnText = fn.toString().replace(STRIP_COMMENTS, &amp;#39;&amp;#39;);
+            argDecl = fnText.match(FN_ARGS);
+            forEach(argDecl[1].split(FN_ARG_SPLIT), function(arg){
+              arg.replace(FN_ARG, function(all, underscore, name){
+                $inject.push(name);
+              });
+            });
+          }
+          // here after we&amp;#39;re done, it completes what we wanted before this 
+          // operation, the fn.$inject, so it just assigns $inject to the function
+          // and $inject gets returned below
+          fn.$inject = $inject;
+        }
+      } else if (isArray(fn)) {
+        // if the function isn&amp;#39;t a function, but is an Array containing a function
+        // we need to remove it from the Array and send the leftover portion of the
+        // Array back as $inject
+
+        // calculate the Array length
+        last = fn.length - 1;
+        assertArgFn(fn[last], &amp;#39;fn&amp;#39;);
+
+        // use slice which returns the portion of the Array minus the final item
+        $inject = fn.slice(0, last);
+      } else {
+        assertArgFn(fn, &amp;#39;fn&amp;#39;, true);
+      }
+      // returns $inject from one of the methods above!
+      return $inject;
+    }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Want to dig in more? Search for this &lt;code class=&quot;language-text&quot;&gt;function annotate&lt;/code&gt; to find this implementation, and &lt;code class=&quot;language-text&quot;&gt;function invoke&lt;/code&gt; to see where the &lt;code class=&quot;language-text&quot;&gt;.apply()&lt;/code&gt; call takes place and how the two hang together.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Correct way to integrate Cordova Plugin in AngularJS, Ionic Framework]]></title><description><![CDATA[If you are using Ionic Framework to develop your mobile app, even if it’s the simplest app, you need at least some cordova plugin to get…]]></description><link>https://ptgamr.github.io/2014-07-20-correct-way-to-integrate-cordova-plugin-in-angularjs-ionic-framework/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-07-20-correct-way-to-integrate-cordova-plugin-in-angularjs-ionic-framework/</guid><pubDate>Sat, 19 Jul 2014 17:54:10 GMT</pubDate><content:encoded>&lt;p&gt;If you are using Ionic Framework to develop your mobile app, even if it’s the simplest app, you need at least some cordova plugin to get your app work nicely.&lt;/p&gt;
+&lt;p&gt;The first and most important is the &lt;a href=&quot;https://github.com/apache/cordova-plugin-device&quot;&gt;Device Plugin&lt;/a&gt;, which will inform your Javascript application when the Device is ready. This is luckily, already handle by Ionic Framework itself, in your app.js file, just inject &lt;strong&gt;$ionicPlatform&lt;/strong&gt; to your controller. For example:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascript&quot;&gt;&lt;pre class=&quot;language-language-javascript&quot;&gt;&lt;code class=&quot;language-language-javascript&quot;&gt;	app.run(function($ionicPlatform) {
+        $ionicPlatform.ready(function() {
+
+            console.log(&amp;#39;### APP READY!!!&amp;#39;);
+
+            setTimeout(function() {
+                navigator.splashscreen.hide();
+            }, 100);
+
+            if(window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+            
+            //other logic here
+            ...
+        });
+    })&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A very convinient way to integrate Cordova to your app is to make use of &lt;a href=&quot;http://ngcordova.com/&quot;&gt;ngCordova Project&lt;/a&gt;. It’s a set of already made AngularJS Services which are wrappers for some popular Cordova Plugins like: &lt;strong&gt;$cordovaCamera&lt;/strong&gt;, &lt;strong&gt;$cordovaContacts&lt;/strong&gt;, &lt;strong&gt;$cordovaSocialSharing&lt;/strong&gt; … Just include the library, and inject the above service whenever you need it.&lt;/p&gt;
+&lt;p&gt;However, when your app require the integration of some plugins that has not been under the protect of ngCordova, you certainly have to write your own wrapper!&lt;/p&gt;
+&lt;p&gt;And here is the way i’m using to write it (I learned it from the way ngCordova did):
+&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;language-javascriptangular.module(&apos;cordovawrapper.screenshot&apos;, [])&quot;&gt;&lt;pre class=&quot;language-language-javascriptangular.module(&apos;cordovawrapper.screenshot&apos;, [])&quot;&gt;&lt;code class=&quot;language-language-javascriptangular.module(&apos;cordovawrapper.screenshot&apos;, [])&quot;&gt;	.factory(&amp;#39;$cordovaScreenshot&amp;#39;, [&amp;#39;$q&amp;#39;, function ($q) {
+
+        return {
+
+            capture: function() {
+
+                   var q = $q.defer();     	
+                   	navigator.screenshot.save(function(error,res){
+                    if(error){
+                        console.error(error);
+                        q.reject(error);
+                    }else{
+                        console.log(&amp;#39;screenshot capture ok: &amp;#39;,res.filePath);
+                        q.resolve(res.filePath);
+                    }
+                },&amp;#39;jpg&amp;#39;,50);
+
+                return q.promise;
+
+            }
+        };
+
+    }]);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[About me]]></title><description><![CDATA[Who am I? I’m just a front-end developer, who is really passionate about WEB and Mobile development. I come from Vietnam. I speak English…]]></description><link>https://ptgamr.github.io/2014-07-17-about/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-07-17-about/</guid><pubDate>Thu, 17 Jul 2014 03:40:06 GMT</pubDate><content:encoded>&lt;h3&gt;Who am I?&lt;/h3&gt;
+&lt;p&gt;I’m just a front-end developer, who is really passionate about WEB and Mobile development. I come from Vietnam. I speak English and Javascript fluently. I become a FULL-STACK developer when needed. You can sometimes find me dealing with  MongoDB, RESTful Services, or even some deployment scripts.&lt;/p&gt;
+&lt;h3&gt;Do I love my job?&lt;/h3&gt;
+&lt;p&gt;Yes. Definitely. There’s nothing more perfect than doing what you love and it brings you everyday food. I do love my job very much.&lt;/p&gt;
+&lt;h3&gt;My works?&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://chrome.google.com/webstore/detail/soundcloudify/boblphpidkohagaoinepjgecndchlnbk&quot;&gt;SoundCloudify&lt;/a&gt; - a music streaming extension written in AngularJS &amp;#x26; open source at &lt;a href=&quot;https://github.com/ptgamr/soundcloudify&quot;&gt;github&lt;/a&gt;. I created it as a hobby and &lt;a href=&quot;http://trinhtrunganh.com/soundcloudify-arround-the-globe/&quot;&gt;people all around the globe love it !!!&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A slick YouTube- and SoundCloud-powered music player for Chrome
+(by &lt;a href=&quot;http://thenextweb.com/apps/2015/05/27/soundcloudify-is-a-slick-youtube-and-soundcloud-powered-music-player-for-chrome/&quot;&gt;TNW&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Before that I was frontend developer at &lt;a href=&quot;http://coccoc.com&quot;&gt;http://coccoc.com&lt;/a&gt;, Vietnamese leading search engine and browser. &lt;/p&gt;
+&lt;p&gt;A site that i still maintain as a hobby: &lt;a href=&quot;http://j4f.vn&quot;&gt;http://j4f.vn&lt;/a&gt;, a funny gif sharing place. It supports uploading, tagging, commenting for images. All done by Javascript: AngularJS, NodeJs, backed by MongoDB.&lt;/p&gt;
+&lt;p&gt;I’m working on an small game for iOS and Android using IONIC Framework. Here is the link to the game &lt;a href=&quot;https://itunes.apple.com/vn/app/hai-nao/id902660856?ls=1&amp;#x26;mt=8&quot;&gt;Hai Nao Game&lt;/a&gt;, this is a Riddle game, question is available in Vietnamese :-)&lt;/p&gt;
+&lt;h3&gt;How to contact with me?&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://plus.google.com/100853671650996855641/posts&quot;&gt;Google+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://twitter.com/ptgamr&quot;&gt;Twitter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://facebook.com/ptgamr&quot;&gt;Facebook&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Adding Splash Screen in Ionic Framework]]></title><description><![CDATA[When writing a mobile application using Cordova, you probaly want to display your beautiful design splash screen while your app is opening…]]></description><link>https://ptgamr.github.io/2014-07-13-ionic-cordova-splash-screen/</link><guid isPermaLink="false">https://ptgamr.github.io/2014-07-13-ionic-cordova-splash-screen/</guid><pubDate>Sat, 12 Jul 2014 20:24:21 GMT</pubDate><content:encoded>&lt;p&gt;When writing a mobile application using Cordova, you probaly want to display your beautiful design splash screen while your app is opening instead of the default Cordova splashscreen. You can do it by copying your splashscreens into the XCode’s project &lt;strong&gt;/Resources/splash&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;p&gt;Yes, after that, run the application on your device, you will have the splash screen displayed. Oh Yeah!!! I made it!!!&lt;/p&gt;
+&lt;p&gt;However, you will notice a little “disrupted white screen” after your splashscreen disappear and application opening it’s browser and your “webapp” initialized.&lt;/p&gt;
+&lt;p&gt;To have the control on this, you will have to use Splashscreen Plugin for Cordova. Hide it when your application “really ready” :-)  &lt;/p&gt;
+&lt;p&gt;I’m sharing with you a solution that is working for me.&lt;/p&gt;
+&lt;p&gt;1 - Install cordova.splashscreen plugin in your app. Example:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ cd myapp
+$ cordova plugin add org.apache.cordova.splashscreen&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;output:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Fetching plugin &amp;quot;org.apache.cordova.splashscreen&amp;quot; via plugin registry
+Installing &amp;quot;org.apache.cordova.splashscreen&amp;quot; for ios&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2 - change the defaults.xml in myapp/platforms/ios/cordova/&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;lt;preference name=&amp;quot;AutoHideSplashScreen&amp;quot; value=&amp;quot;false&amp;quot; /&amp;gt;
+&amp;lt;preference name=&amp;quot;ShowSplashScreenSpinner&amp;quot; value=&amp;quot;false&amp;quot; /&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3 - add in your controllers.js:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;angular.module(&amp;#39;starter.controllers&amp;#39;, [])
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 100);
+ });
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After make these changes you must rebuild the app: &lt;code class=&quot;language-text&quot;&gt;$ ionic build ios&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;And try it &lt;code class=&quot;language-text&quot;&gt;$ ionic emulate ios&lt;/code&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
